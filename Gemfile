@@ -38,7 +38,6 @@ gem 'jbuilder', '~> 2.5'
 gem 'inherited_resources', github: 'activeadmin/inherited_resources'
 gem 'activeadmin', '~> 1.0.0.pre4'
 gem 'jquery-ui-rails', '~> 5.0.4'
-gem 'devise'
 gem 'foundation-rails'
 
 group :development, :test do
