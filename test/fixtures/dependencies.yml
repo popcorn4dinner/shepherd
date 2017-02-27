@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  type: 1
+  service: one
+  towards: one
+
+two:
+  type: 1
+  service: two
+  towards: two
