@@ -9,7 +9,7 @@ end
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.1'
 # Use postgresql as the database for Active Record
-gem 'pg', '~> 0.18'
+gem 'mysql2'
 # Use Puma as the app server
 gem 'puma', '~> 3.0'
 # Use SCSS for stylesheets
@@ -38,6 +38,9 @@ gem 'jbuilder', '~> 2.5'
 gem 'inherited_resources', github: 'activeadmin/inherited_resources'
 gem 'activeadmin', '~> 1.0.0.pre4'
 gem 'activeadmin_addons'
+gem 'seed_dump'
+gem 'faraday'
+
 
 gem 'jquery-ui-rails', '~> 5.0.4'
 gem 'foundation-rails'

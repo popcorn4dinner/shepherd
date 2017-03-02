@@ -1,16 +1,15 @@
 version: '2'
 services:
   db:
-    image: postgres
+    image: mariadb
     environment:
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: password
-      RAILS_ENV: development
+      MYSQL_ROOT_PASSWORD: password
+
   web:
     build: .
     command: bundle exec rails s -p 4000 -b '0.0.0.0'
     volumes:
-      - .:/myapp
+      - .:/app
     ports:
       - "80:4000"
     depends_on:
@@ -19,3 +18,14 @@ services:
       DB_HOST: db
       DB_USER: root
       DB_PASSWORD: password
+      RAILS_ENV: development
+    links:
+      - application_storage:application_storage
+
+  application_storage:
+    build:
+      context: ../sinatra_dummy_app
+    ports:
+      - 4000:80
+    volumes:
+      - ../sinatra_dummy_app:/app
