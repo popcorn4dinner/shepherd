@@ -3,22 +3,8 @@ ActiveAdmin.register Service do
  permit_params :name,
               :health_endpoint,
               :project_id,
-              dependency_ids: [:id],
-              external_resource_ids: [:id]
-
-  before_create :sanitize_habtm_ids
-  before_update :sanitize_habtm_ids
-
-  controller do
-    def sanitize_habtm_ids(arg)
-      ["dependency_ids","external_resource_ids"].each do |attribute|
-        unless params[attribute].nil?
-          params[attribute].reject{ |c| c.empty? }
-        end
-      end
-    end
-  end
-
+              dependency_ids: [],
+              external_resource_ids: []
  index do
    column :name
    column :status do |service|
