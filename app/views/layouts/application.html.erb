@@ -9,6 +9,15 @@
   </head>
 
   <body>
+
+    <div class="row head">
+      <div class="small-3 large-2 columns">
+        <h1>Shepard</h1>
+      </div>
+      <div class="small-4 large-2 columns">
+        <%= yield :admin_navigation%>
+      </div>
+    </div>
     <%= yield %>
   </body>
 </html>
