@@ -20,12 +20,87 @@ services:
       DB_PASSWORD: password
       RAILS_ENV: development
     links:
-      - application_storage:application_storage
+      - service1:service1
+      - service2:service2
+      - service3:service3
+      - service4:service4
+      - service5:service5
+      - service6:service6
+      - service7:service7
+      - service8:service8
+      - service9:service9
+      - service10:service10
+      - service11:service11
+      - service12:service12
 
-  application_storage:
+  service1:
     build:
       context: ../sinatra_dummy_app
     ports:
-      - 4000:80
-    volumes:
-      - ../sinatra_dummy_app:/app
+      - 80
+
+  service2:
+    build:
+      context: ../sinatra_dummy_app
+    ports:
+      - 80
+
+  service3:
+    build:
+      context: ../sinatra_dummy_app
+    ports:
+      - 80
+
+  service4:
+    build:
+      context: ../sinatra_dummy_app
+    ports:
+      - 80
+
+  service5:
+    build:
+      context: ../sinatra_dummy_app
+    ports:
+      - 80
+
+  service6:
+    build:
+      context: ../sinatra_dummy_app
+    ports:
+      - 80
+
+  service7:
+    build:
+      context: ../sinatra_dummy_app
+    ports:
+      - 80
+
+  service8:
+    build:
+      context: ../sinatra_dummy_app
+    ports:
+      - 80
+
+  service9:
+    build:
+      context: ../sinatra_dummy_app
+    ports:
+      - 80
+
+  service10:
+    build:
+      context: ../sinatra_dummy_app
+    ports:
+      - 80
+
+  service11:
+    build:
+      context: ../sinatra_dummy_app
+    ports:
+      - 80
+
+  service12:
+    build:
+      context: ../sinatra_dummy_app
+    ports:
+      - 80

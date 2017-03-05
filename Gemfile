@@ -39,7 +39,7 @@ gem 'inherited_resources', github: 'activeadmin/inherited_resources'
 gem 'activeadmin', '~> 1.0.0.pre4'
 gem 'activeadmin_addons'
 gem 'seed_dump'
-gem 'faraday'
+gem 'rest-client'
 
 
 gem 'jquery-ui-rails', '~> 5.0.4'

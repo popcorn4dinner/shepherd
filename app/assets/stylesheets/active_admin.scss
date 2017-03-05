@@ -27,6 +27,22 @@ $breadcrumbs-separator-color: #aab2ba !default;
 $required-field-marker-color: #aaa !default;
 $form-label-color: $section-header-text-color !default;
 $page-header-text-color: #cdcdcd !default;
+$warning-color: #D9B310;
+$error-color: #E14658;
+$success-color: #0E8044;
+
 
 @import "active_admin/mixins";
 @import "active_admin/base";
+
+.status_tag {
+  &.up {
+    background: $success-color;
+  }
+  &.config-error {
+    background: $warning-color;
+  }
+  &.down {
+    background: $error-color;
+  }
+}

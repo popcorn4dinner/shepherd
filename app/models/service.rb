@@ -2,6 +2,8 @@ class Service < ApplicationRecord
   validates :name, presence: true, uniqueness: true
   validates :health_endpoint, uniqueness: true
   validates :project, presence: true
+  
+  attr_accessor :is_user_entry_point
 
   belongs_to :project
 
@@ -16,36 +18,27 @@ class Service < ApplicationRecord
 
 
   def status
-    unless health_endpoint.nil?
-      status_map[retrieveStatusCode]
+    case current_status_code
+    when 200..299
+      :up
+    when 300..499
+      :config_error
     else
-      :no_status
+      :down
     end
   end
 
   private
 
-  def retrieveStatusCode
-    #Rails.cache.fetch("#{name}.status", expires_in: 5.seconds) do
+  def current_status_code
+    Rails.cache.fetch("#{name}.status", expires_in: 5.seconds) do
       begin
-        response = Faraday.get health_endpoint
-        puts "+++++++++++++++++++"
-        puts response.status.to_i
-        puts "+++++++++++++++++++"
-
-        response.status
+        response = RestClient.get health_endpoint
+        return response.code
       rescue
-        500
+        return 500
       end
-    #end
-  end
-
-  def status_map
-     {
-    '202' => :up,
-    '404' => :config_error,
-    '500' => :down
-  }
+    end
   end
 
 
