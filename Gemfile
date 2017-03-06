@@ -40,6 +40,7 @@ gem 'activeadmin', '~> 1.0.0.pre4'
 gem 'activeadmin_addons'
 gem 'seed_dump'
 gem 'rest-client'
+gem 'gon'
 
 
 gem 'jquery-ui-rails', '~> 5.0.4'
