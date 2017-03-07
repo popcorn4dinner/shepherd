@@ -12,5 +12,17 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require foundation
 //= require turbolinks
 //= require_tree .
+
+$(function(){
+  $(document).foundation();
+  var container = document.getElementById('network');
+  var network = new vis.Network(
+    container,
+    {nodes: gon.network_data.nodes, edges: gon.network_data.edges},
+    gon.network_data.nodes.options
+  );
+
+});

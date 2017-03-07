@@ -2,7 +2,7 @@ class Service < ApplicationRecord
   validates :name, presence: true, uniqueness: true
   validates :health_endpoint, uniqueness: true
   validates :project, presence: true
-  
+
   attr_accessor :is_user_entry_point
 
   belongs_to :project

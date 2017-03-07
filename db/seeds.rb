@@ -1,26 +1,6 @@
-ExternalResource::HABTM_Services.create!([
-  {external_resource_id: 1, service_id: 1},
-  {external_resource_id: 4, service_id: 2},
-  {external_resource_id: 3, service_id: 5}
-])
-Service::HABTM_Dependencies.create!([
-  {type: nil, service_id: 4, dependency_id: 1},
-  {type: nil, service_id: 3, dependency_id: 4},
-  {type: nil, service_id: 5, dependency_id: 1},
-  {type: nil, service_id: 5, dependency_id: 3},
-  {type: nil, service_id: 2, dependency_id: 6},
-  {type: nil, service_id: 5, dependency_id: 6},
-  {type: nil, service_id: 7, dependency_id: 1},
-  {type: nil, service_id: 7, dependency_id: 3},
-  {type: nil, service_id: 7, dependency_id: 2},
-  {type: nil, service_id: 7, dependency_id: 6},
-  {type: nil, service_id: 4, dependency_id: 5},
-  {type: nil, service_id: 4, dependency_id: 6}
-])
-Service::HABTM_ExternalResources.create!([
-  {external_resource_id: 1, service_id: 1},
-  {external_resource_id: 4, service_id: 2},
-  {external_resource_id: 3, service_id: 5}
+Team.create!([
+  {name: "Wolf Team"},
+  {name: "Team II"}
 ])
 ExternalResource.create!([
   {name: "Legacy DB"},
@@ -41,10 +21,7 @@ Service.create!([
   {name: "Job Offer Storage", health_endpoint: "http://service6/ping", project_id: 1},
   {name: "Backoffice", health_endpoint: "http://service7/ping", project_id: 1}
 ])
-Team.create!([
-  {name: "Wolf Team"},
-  {name: "Team II"}
-])
+
 Dependency.create!([
   {type: nil, service_id: 4, dependency_id: 1},
   {type: nil, service_id: 3, dependency_id: 4},
@@ -58,4 +35,9 @@ Dependency.create!([
   {type: nil, service_id: 7, dependency_id: 6},
   {type: nil, service_id: 4, dependency_id: 5},
   {type: nil, service_id: 4, dependency_id: 6}
+])
+ExternalResource::HABTM_Services.create!([
+  {external_resource_id: 1, service_id: 1},
+  {external_resource_id: 4, service_id: 2},
+  {external_resource_id: 3, service_id: 5}
 ])
