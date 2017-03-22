@@ -22,7 +22,7 @@ ActiveAdmin.register Service do
       f.input :name
       f.input :project
       f.input :health_endpoint
-      f.input :is_user_entry_point
+      f.input :is_user_entry_point, as: :boolean, default: false
     end
 
     f.inputs 'dependencies' do

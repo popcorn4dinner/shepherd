@@ -45,6 +45,7 @@ gem 'gon'
 
 gem 'jquery-ui-rails', '~> 5.0.4'
 gem 'foundation-rails'
+gem 'font-awesome-sass'
 
 
 group :development, :test do

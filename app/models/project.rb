@@ -6,7 +6,7 @@ class Project < ApplicationRecord
   validates :team, presence: true
 
   def to_s
-    @name
+    name
   end
 
 

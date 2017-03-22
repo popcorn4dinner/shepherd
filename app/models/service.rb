@@ -1,9 +1,8 @@
 class Service < ApplicationRecord
   validates :name, presence: true, uniqueness: true
-  validates :health_endpoint, uniqueness: true
+  validates :health_endpoint, length: {maximum: 512}
   validates :project, presence: true
-
-  attr_accessor :is_user_entry_point
+  # validates :is_user_entry_point, length: {minimum: 1 }
 
   belongs_to :project
 
@@ -16,15 +15,41 @@ class Service < ApplicationRecord
 
   has_and_belongs_to_many :external_resources
 
+  def internal_dependencies
+    dependencies.select{|d| d.project == project}
+  end
+
+  def external_dependencies
+    return [direct_external_dependencies, implicit_dependencies].flatten
+  end
+
+  def direct_external_dependencies
+    dependencies.select{|d| d.project != project}
+  end
+
+  def implicit_dependencies
+    result = []
+    external_resources.each do |resource|
+      implicit_dependencies = resource.services.select{|s| s.project != project}
+      result.merge implicit_dependencies
+    end
+
+    return result
+  end
+
 
   def status
-    case current_status_code
-    when 200..299
-      :up
-    when 300..499
-      :config_error
+    if health_endpoint.present?
+      case current_status_code
+      when 200..299
+        :up
+      when 300..499
+        :config_error
+      else
+        :down
+      end
     else
-      :down
+      :no_status
     end
   end
 

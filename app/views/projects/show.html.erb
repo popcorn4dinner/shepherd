@@ -1,7 +1,5 @@
-<% content_for :admin_navigation do %>
-  <div class="button">
-    <%= link_to "edit Project", admin_project_path(@project) %>
-  </div>
+<% content_for :admin_path do %>
+  <%= admin_project_path(@project) %>
 <% end %>
 <div class='row'>
   <div class="small-12 large-12 columns">

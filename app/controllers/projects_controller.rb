@@ -11,7 +11,7 @@ class ProjectsController < ApplicationController
   # GET /projects/1
   # GET /projects/1.json
   def show
-    # network_for gon, @project
+    network_for gon, @project
   end
 
 
@@ -28,6 +28,6 @@ class ProjectsController < ApplicationController
     end
 
     def network_for(gon, resource)
-      gon.network_data = Network.new(resource).to_hash
+      gon.networkData = Network.new(resource).to_hash
     end
 end

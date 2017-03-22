@@ -21,8 +21,8 @@ $(function(){
   var container = document.getElementById('network');
   var network = new vis.Network(
     container,
-    {nodes: gon.network_data.nodes, edges: gon.network_data.edges},
-    gon.network_data.nodes.options
+    {nodes: gon.networkData.nodes, edges: gon.networkData.edges},
+    gon.networkData.options
   );
 
 });

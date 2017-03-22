@@ -13,14 +13,22 @@
   </head>
 
   <body>
+    <i class="fa fa-flag" style="display:none"></i>
 
     <div class="row head">
-      <div class="small-3 large-2 columns">
+      <div class="small-4 columns">
         <h1>Shepard</h1>
       </div>
-      <div class="small-4 large-2 columns">
-        <%= yield :admin_navigation%>
+      <% if content_for?(:admin_path) %>
+      <div class="small-4 columns">
+        <div class="button float-right">
+          <%= link_to "admin", yield(:admin_path) %>
+        </div>
       </div>
+      <% end %>
+
+
+
     </div>
     <%= yield %>
   </body>
