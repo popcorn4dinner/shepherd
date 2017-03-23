@@ -1,4 +1,7 @@
 class Project < ApplicationRecord
+  # extend FriendlyId
+  # friendly_id :name, use: :slugged
+  # 
   belongs_to :team
   has_many :services
 
@@ -8,6 +11,5 @@ class Project < ApplicationRecord
   def to_s
     name
   end
-
 
 end

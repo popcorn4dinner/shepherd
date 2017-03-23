@@ -33,4 +33,47 @@ ActiveAdmin.register Service do
     f.actions
   end
 
+  show do
+      panel "Service Details" do
+        attributes_table_for service do
+          row :name
+          row :project
+          row :is_user_entry_point
+          row :health_endpoint
+          row :status do
+            status_tag service.status
+          end
+
+          row :created_at
+          row :updated_at
+        end
+      end
+
+      panel "Dependencies" do
+        attributes_table_for service do
+          row 'Internal dependencies' do
+            service.internal_dependencies.each do |d|
+              status_tag d.name, d.status
+              text_node "&nbsp;".html_safe
+            end
+          end
+
+          row 'External dependencies' do
+            service.external_dependencies.each do |d|
+              status_tag d.name, d.status
+              text_node "&nbsp;".html_safe
+            end
+          end
+
+          row 'Dependency of' do
+            service.dependency_of.each do |d|
+              status_tag d.name, d.status
+              text_node "&nbsp;".html_safe
+            end
+          end
+
+        end
+      end
+
+    end
 end

@@ -1,4 +1,7 @@
 class Service < ApplicationRecord
+  # extend FriendlyId
+  # friendly_id :name, use: :slugged
+
   validates :name, presence: true, uniqueness: true
   validates :health_endpoint, length: {maximum: 512}
   validates :project, presence: true
@@ -20,7 +23,7 @@ class Service < ApplicationRecord
   end
 
   def external_dependencies
-    return [direct_external_dependencies, implicit_dependencies].flatten
+    [direct_external_dependencies, implicit_dependencies].flatten
   end
 
   def direct_external_dependencies
@@ -31,12 +34,15 @@ class Service < ApplicationRecord
     result = []
     external_resources.each do |resource|
       implicit_dependencies = resource.services.select{|s| s.project != project}
-      result.merge implicit_dependencies
+      result << implicit_dependencies
     end
 
-    return result
+    return result.flatten.uniq
   end
 
+  def dependency_of
+    Dependency.select{|d| d.dependency_id = id}.map{|d| d.service}.uniq
+  end
 
   def status
     if health_endpoint.present?

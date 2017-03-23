@@ -5,13 +5,15 @@ class ProjectsController < ApplicationController
   # GET /projects.json
   def index
     @projects = Project.all
-    network_for gon, @projects
+    network = NetworkBuilders::ProjectsNetworkBuilder.new(@project).build()
+    gon.networkData = network.to_hash
   end
 
   # GET /projects/1
   # GET /projects/1.json
   def show
-    network_for gon, @project
+    network = NetworkBuilders::ProjectNetworkBuilder.new(@project).build()
+    gon.networkData = network.to_hash
   end
 
 
@@ -25,9 +27,5 @@ class ProjectsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def project_params
       params.fetch(:project, {})
-    end
-
-    def network_for(gon, resource)
-      gon.networkData = Network.new(resource).to_hash
     end
 end
