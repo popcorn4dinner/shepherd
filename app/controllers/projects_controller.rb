@@ -1,11 +1,11 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: [:show]
+  before_action :set_project, only: [:show, :health]
 
   # GET /projects
   # GET /projects.json
   def index
     @projects = Project.all
-    network = NetworkBuilders::ProjectsNetworkBuilder.new(@project).build()
+    network = NetworkBuilders::ProjectsNetworkBuilder.new(@projects).build()
     gon.networkData = network.to_hash
   end
 
@@ -13,6 +13,11 @@ class ProjectsController < ApplicationController
   # GET /projects/1.json
   def show
     network = NetworkBuilders::ProjectNetworkBuilder.new(@project).build()
+    gon.networkData = network.to_hash
+  end
+
+  def health
+    network = NetworkBuilders::HealthNetworkBuilder.new(@project).build()
     gon.networkData = network.to_hash
   end
 

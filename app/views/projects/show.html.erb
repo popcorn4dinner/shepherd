@@ -1,6 +1,11 @@
 <% content_for :admin_path do %>
   <%= admin_project_path(@project) %>
 <% end %>
+<% content_for :actions do %>
+  <div class="button">
+    <%= link_to "enable health", project_health_path(@project) %>
+  </div>
+<% end %>
 <div class='row'>
   <div class="small-12 large-12 columns">
     <h2> <%= @project.to_s %></h2>

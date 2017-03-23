@@ -19,13 +19,19 @@
       <div class="small-4 columns">
         <h1>Shepard</h1>
       </div>
-      <% if content_for?(:admin_path) %>
+
       <div class="small-4 columns">
-        <div class="button float-right">
-          <%= link_to "admin", yield(:admin_path) %>
+        <div class="float-right">
+          <% if content_for?(:actions) %>
+            <%= yield(:actions) %>
+          <% end %>
+          <% if content_for?(:admin_path) %>
+            <div class="button">
+              <%= link_to "admin", yield(:admin_path) %>
+            </div>
+          <% end %>
         </div>
       </div>
-      <% end %>
 
 
 
