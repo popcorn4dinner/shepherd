@@ -41,9 +41,9 @@ module NetworkBuilders
               network.add_edge user_node, service_node, :arrow
             end
 
-            service.dependencies.each do |dependency|
+            service.dependency_of.each do |dependency|
               dependency_node = process_service network, dependency
-              network.add_edge service_node, dependency_node, :arrow
+              network.add_edge dependency_node, service_node, :arrow
             end
 
             service.external_resources.each do |resource|

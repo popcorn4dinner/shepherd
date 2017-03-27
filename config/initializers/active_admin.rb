@@ -270,4 +270,14 @@ ActiveAdmin.setup do |config|
   # of those filters by default here.
   #
   # config.include_default_association_filters = true
+  ActiveAdmin::ResourceController.class_eval do
+   def find_resource
+     begin
+       scoped_collection.where(slug: params[:id]).first! if resource_class.is_a?(FriendlyId)
+     rescue ActiveRecord::RecordNotFound
+       scoped_collection.where(id: params[:id]).first!
+     end
+   end
+ end
+
 end

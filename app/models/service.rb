@@ -1,6 +1,6 @@
 class Service < ApplicationRecord
-  # extend FriendlyId
-  # friendly_id :name, use: :slugged
+  extend FriendlyId
+  friendly_id :name, use: [:slugged, :finders]
 
   validates :name, presence: true, uniqueness: true
   validates :health_endpoint, length: {maximum: 512}
@@ -41,7 +41,12 @@ class Service < ApplicationRecord
   end
 
   def dependency_of
-    Dependency.select{|d| d.dependency_id = id}.map{|d| d.service}.uniq
+    services = []
+    Dependency.where(dependency_id: id).find_each do |dependency|
+      services << dependency.service
+    end
+
+    return services
   end
 
   def status

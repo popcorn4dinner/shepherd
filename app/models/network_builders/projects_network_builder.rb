@@ -17,12 +17,7 @@ module NetworkBuilders
         network.add_edge_type :arrow, {arrows: 'to'}
 
         @projects.each do |project|
-          network.add_node_type   {
-              color: {
-                  background: 'grey',
-                  border: 'white'
-                }
-            }
+          network.add_node_type group_name_for(project), {color: {background: 'grey', border: 'white'}}
 
           project_connections = project.services.select {|s| s.external_dependencies.any?}
 

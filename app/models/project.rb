@@ -1,7 +1,7 @@
 class Project < ApplicationRecord
-  # extend FriendlyId
-  # friendly_id :name, use: :slugged
-  # 
+  extend FriendlyId
+  friendly_id :name, use: [:slugged, :finders]
+  
   belongs_to :team
   has_many :services
 

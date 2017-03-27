@@ -52,22 +52,29 @@ ActiveAdmin.register Service do
       panel "Dependencies" do
         attributes_table_for service do
           row 'Internal dependencies' do
-            service.internal_dependencies.each do |d|
+            service.internal_dependencies.map do |d|
               status_tag d.name, d.status
               text_node "&nbsp;".html_safe
             end
           end
 
           row 'External dependencies' do
-            service.external_dependencies.each do |d|
+            service.external_dependencies.map do |d|
               status_tag d.name, d.status
               text_node "&nbsp;".html_safe
             end
           end
 
           row 'Dependency of' do
-            service.dependency_of.each do |d|
+            service.dependency_of.map do |d|
               status_tag d.name, d.status
+              text_node "&nbsp;".html_safe
+            end
+          end
+
+          row 'Resources' do
+            service.external_resources.map do |d|
+              status_tag d.name, :default
               text_node "&nbsp;".html_safe
             end
           end
