@@ -20,6 +20,7 @@ module NetworkBuilders
           network.add_node_type :resource, get_vis_options_for(:resource)
 
           network.add_edge_type :arrow, {arrows: 'to'}
+          network.add_edge_type :arrow_from, {arrows: 'from'}
 
           @project.services.each do |service|
             process_service network, service
@@ -43,7 +44,7 @@ module NetworkBuilders
 
             service.dependency_of.each do |dependency|
               dependency_node = process_service network, dependency
-              network.add_edge dependency_node, service_node, :arrow
+              network.add_edge service_node, dependency_node, :arrow_from
             end
 
             service.external_resources.each do |resource|
