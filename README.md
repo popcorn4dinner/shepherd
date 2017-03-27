@@ -53,7 +53,7 @@ docker-compose exec web rails db:seed
 ```
 {
   "id":1,
-  "name":"Application Storage",
+  "name":"Some Storage Service",
   "status":"up",
   "health_endpoint":"http://service1/ping",
   "is_user_entry_point":false,
@@ -64,7 +64,7 @@ docker-compose exec web rails db:seed
   "internal_dependencies":[
       {
         "id":10,
-        "name":"Parsing Trigger",
+        "name":"Parsing Service",
         "status":"no_status",
         "health_endpoint":""
       }
@@ -73,7 +73,7 @@ docker-compose exec web rails db:seed
   "dependency_of":[
       {
         "id":4,
-        "name":"Pay Per X User Interface Provider",
+        "name":"Some Other Service",
         "status":"up",
         "health_endpoint":"http://service4/ping"
         },
