@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  root to: '/admin'
+  root to: "admin/dashboard#index"
 
   get '/projects/:id/health', to: 'projects#health', as: 'project_health'
   get '/projects/:id', to: 'projects#show', as: 'project'

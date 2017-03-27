@@ -6,18 +6,13 @@ ActiveAdmin.register_page "Dashboard" do
 
     columns do
       column do
-        panel "Recent Posts" do
-            Project.last(5).map do |project|
+        panel "Recently added" do
+            Service.last(5).map do |service|
               div class: "blank_slate_container" do
-                h4 project.name
-                ol do
-                  li class: "action input_action" do
-                    link_to("show", admin_project_path(project))
-                  end
-                  li class: "action input_action" do
-                    link_to("administrate", admin_project_path(project))
-                  end
-                end
+                h4 service.name
+                link_to("show", admin_service_path(service))
+
+                link_to("project dashboard", project_path(service.project))
               end
             end
         end
