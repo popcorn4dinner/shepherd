@@ -1,3 +1,21 @@
+<% content_for :admin_path do %>
+  <%= admin_projects_path %>
+<% end %>
 
+<% content_for :actions do %>
+  <li>
+    <a href="#" class="button" >services</a>
+    <ul class="menu">
+      <% @projects.each do |project|%>
+        <li>
+         <%= link_to project.name, project_path(project) %>
+       </li>
+      <% end %>
+    </ul>
+  </li>
+  <li>
+    <%= link_to "admin", admin_projects_path, class: 'button' %>
+  </li>
+<% end %>
 
 <div id='network'></div>

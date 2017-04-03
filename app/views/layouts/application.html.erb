@@ -22,14 +22,11 @@
 
       <div class="small-4 columns">
         <div class="float-right">
-          <% if content_for?(:actions) %>
-            <%= yield(:actions) %>
-          <% end %>
-          <% if content_for?(:admin_path) %>
-            <div class="button">
-              <%= link_to "admin", yield(:admin_path) %>
-            </div>
-          <% end %>
+          <ul class="dropdown menu" data-dropdown-menu>
+            <% if content_for?(:actions) %>
+              <%= yield(:actions) %>
+            <% end %>
+          </ul>
         </div>
       </div>
 

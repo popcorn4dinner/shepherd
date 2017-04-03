@@ -2,6 +2,10 @@ ActiveAdmin.register Project do
 
 permit_params :name, :team_id
 
+action_item :dashboard, only: :index do
+  link_to "Open Dashboard", projects_path
+end
+
 action_item :dashboard, only: :show do
   link_to "Open Dashboard", project_path(project)
 end
