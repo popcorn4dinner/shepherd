@@ -31,6 +31,10 @@ module NetworkBuilders
             {
               shape: 'dot'
             }
+          when :project
+            {
+              size: 30
+            }
           when :user
             {
               shape: 'icon',

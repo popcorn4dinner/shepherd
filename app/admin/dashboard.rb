@@ -9,10 +9,11 @@ ActiveAdmin.register_page "Dashboard" do
         panel "Recently added" do
             Service.last(5).map do |service|
               div class: "blank_slate_container" do
-                h4 service.name
-                link_to("show", admin_service_path(service))
+                span service.name
+                a link_to("show", admin_service_path(service))
 
-                link_to("project dashboard", project_path(service.project))
+                a link_to("project dashboard", project_path(service.project))
+
               end
             end
         end

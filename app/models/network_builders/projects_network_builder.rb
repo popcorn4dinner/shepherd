@@ -13,16 +13,18 @@ module NetworkBuilders
         network.add_node_type :user, get_vis_options_for(:user)
         network.add_node_type :service, get_vis_options_for(:service)
         network.add_node_type :resource, get_vis_options_for(:resource)
+        network.add_node_type :project, get_vis_options_for(:project)
 
         network.add_edge_type :arrow, {arrows: 'to'}
+        network.add_edge_type :line, {}
+
 
         @projects.each do |project|
-          network.add_node_type group_name_for(project), {color: {background: 'grey', border: 'white'}}
-
-          project_connections = project.services.select {|s| s.external_dependencies.any?}
+          project_node = network.add_node project.name, :project
 
           project_connections.each do |service|
-            process_service network, service
+            service_node = process_service network, service
+            network.add_edge project_node, service_node, :line
           end
         end
 
@@ -30,6 +32,10 @@ module NetworkBuilders
       end
 
       private
+
+      def project_connections
+        roject.services.select {|s| s.external_dependencies.any? || s.is_user_entry_point}
+      end
 
       def process_service(network, service)
         service_node = network.find_node_by_name service.name
@@ -42,9 +48,15 @@ module NetworkBuilders
             network.add_edge user_node, service_node, :arrow
           end
 
-          service.external_dependencies.each do |dependency|
+          service.direct_external_dependencies.each do |dependency|
             dependency_node = process_service network, dependency
             network.add_edge service_node, dependency_node, :arrow
+          end
+
+          service.external_resources.each do |resource|
+            resource_node = network.find_node_by_name resource.name || network.add_node resource.name, :resource
+            network.add_edge service_node, resource_node, :arrow
+
           end
         end
 
