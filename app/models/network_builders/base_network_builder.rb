@@ -8,8 +8,8 @@ module NetworkBuilders
 
       private
 
-      def create_service_node(network, service)
-        return network.add_node service.name, :service, group_name_for(service.project)
+      def create_service_node(network, service, type = :service)
+        return network.add_node service.name, type, group_name_for(service.project)
       end
 
       def process_resource(network, service_node, resource)
@@ -27,6 +27,14 @@ module NetworkBuilders
 
       def get_vis_options_for(group_type)
         case group_type
+        when :external_service
+            {
+              shape: 'dot',
+              color: {
+                  background: 'light-grey',
+                  border: 'grey'
+                }
+            }
           when :service
             {
               shape: 'dot'

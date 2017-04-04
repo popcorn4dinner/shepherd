@@ -14,25 +14,37 @@
 
   <body>
     <i class="fa fa-flag" style="display:none"></i>
+    <div class='head'>
+      <div class="row">
+        <div class="small-4 columns">
+          <h1>Shepard</h1>
+        </div>
 
-    <div class="row head">
-      <div class="small-4 columns">
-        <h1>Shepard</h1>
-      </div>
+        <div class="small-8 columns">
+          <div class="float-right">
+            <div class="button-group">
+              <button class="button" type="button" data-toggle="projects-dropdown">Projects</button>
+              <% if content_for?(:actions) %>
+                <%= yield(:actions) %>
+              <% end %>
+            </div>
+          </div>
+        </div>
 
-      <div class="small-4 columns">
-        <div class="float-right">
-          <ul class="dropdown menu" data-dropdown-menu>
-            <% if content_for?(:actions) %>
-              <%= yield(:actions) %>
+        <div class="dropdown-pane" id="projects-dropdown" data-dropdown data-auto-focus="true">
+          <ul class='menu vertical'>
+            <% @projects.each do |project|%>
+              <li>
+                <%= link_to project.name, project_path(project) %>
+              </li>
             <% end %>
           </ul>
+
         </div>
+
       </div>
-
-
-
     </div>
+
     <%= yield %>
   </body>
 </html>

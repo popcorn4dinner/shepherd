@@ -1,10 +1,11 @@
 class ProjectsController < ApplicationController
   before_action :set_project, only: [:show, :health]
+  before_action :set_projects
+
 
   # GET /projects
   # GET /projects.json
   def index
-    @projects = Project.all
     network = NetworkBuilders::ProjectsNetworkBuilder.new(@projects).build()
     gon.networkData = network.to_hash
   end
@@ -24,9 +25,12 @@ class ProjectsController < ApplicationController
 
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_project
       @project = Project.find_by(slug: params[:id])
+    end
+
+    def set_projects
+      @projects = Project.all
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

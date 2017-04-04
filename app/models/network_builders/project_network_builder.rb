@@ -11,6 +11,7 @@ module NetworkBuilders
 
           network.add_node_type :user, get_vis_options_for(:user)
           network.add_node_type :service, get_vis_options_for(:service)
+          network.add_node_type :external_service, get_vis_options_for(:external_service)
           network.add_node_type :resource, get_vis_options_for(:resource)
 
           network.add_edge_type :arrow, {arrows: 'to'}
@@ -28,7 +29,8 @@ module NetworkBuilders
           service_node = network.find_node_by_name service.name
 
           unless service_node.present?
-            service_node = create_service_node network, service
+            service_type = service.project.eql?(@project) ? :service : :external_service
+            service_node = create_service_node network, service, service_type
 
             if service.is_user_entry_point
               user_node = network.add_node "User", :user
