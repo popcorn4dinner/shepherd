@@ -7,7 +7,7 @@ services:
 
   web:
     build: .
-    command: bundle exec rails s -p 4000 -b '0.0.0.0'
+    command: ./start.sh
     volumes:
       - .:/app
     ports:
