@@ -42,6 +42,7 @@ gem 'seed_dump'
 gem 'rest-client'
 gem 'gon'
 gem 'friendly_id', '~> 5.1.0'
+gem 'down'
 
 gem 'jquery-ui-rails', '~> 5.0.4'
 gem 'foundation-rails'
