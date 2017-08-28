@@ -4,8 +4,10 @@ ActiveAdmin.register Service do
               :health_endpoint,
               :project_id,
               :is_user_entry_point,
+              :repository_url,
               dependency_ids: [],
               external_resource_ids: []
+
  index do
    column :name
    column :status do |service|
@@ -22,6 +24,7 @@ ActiveAdmin.register Service do
       f.input :name
       f.input :project
       f.input :health_endpoint
+      f.input :repository_url
       f.input :is_user_entry_point, as: :boolean, default: false
     end
 

@@ -5,6 +5,7 @@ class Service < ApplicationRecord
   validates :name, presence: true, uniqueness: true
   validates :health_endpoint, length: {maximum: 512}
   validates :project, presence: true
+
   # validates :is_user_entry_point, length: {minimum: 1 }
 
   belongs_to :project
@@ -17,6 +18,8 @@ class Service < ApplicationRecord
                             uniq: true
 
   has_and_belongs_to_many :external_resources
+
+  attr_accessor :repository_url
 
   def internal_dependencies
     dependencies.select{|d| d.project == project}
