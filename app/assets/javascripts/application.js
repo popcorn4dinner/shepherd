@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require foundation
 //= require turbolinks
+//= require vis.min
 
 $(document).on("turbolinks:load ready", function(){
   $(document).foundation();
