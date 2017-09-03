@@ -1,6 +1,5 @@
 class ProjectsController < ApplicationController
   before_action :set_project, only: [:show, :health]
-  before_action :set_projects
 
 
   # GET /projects
@@ -29,9 +28,7 @@ class ProjectsController < ApplicationController
       @project = Project.find_by(slug: params[:id])
     end
 
-    def set_projects
-      @projects = Project.all
-    end
+
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def project_params

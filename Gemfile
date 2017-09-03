@@ -42,10 +42,10 @@ gem 'seed_dump'
 gem 'rest-client'
 gem 'gon'
 gem 'friendly_id', '~> 5.1.0'
-gem 'down'
+gem 'config'
 
 gem 'jquery-ui-rails', '~> 5.0.4'
-gem 'foundation-rails'
+gem 'foundation-rails', '~> 6.4'
 gem 'font-awesome-sass'
 
 

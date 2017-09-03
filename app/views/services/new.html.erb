@@ -1,0 +1,26 @@
+
+
+    <div class="row" style='padding-top:20vh;'>
+
+      <div class="large-6 medium-8 small-12 large-centered small-centered columns">
+        <h2 style="text-align:center; font-size: 5em"><i class="fa fa-cloud-download" aria-hidden="true"></i></h2>
+          <h2 style="text-align:center; font-size: 2em">Create a new service</h2>
+      </div>
+    </div>
+    <div class="row ">
+
+      <div class="large-6 medium-8 small-12 large-centered small-centered  columns">
+        <%= form_for @service, url: {action: "create"}, html: {class: ""} do |f| %>
+          <div class="input-group">
+              <%= f.text_field :repository_url, class: "input-group-field", placeholder: "enter git repository url"%>
+              <div class="input-group-button">
+                  <%= f.submit "create", class: "button"%>
+              </div>
+
+          </div>
+        <% end %>
+
+          <%= render '_partials/spinner' %>
+      </div>
+
+    </div>
