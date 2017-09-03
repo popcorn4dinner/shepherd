@@ -1,8 +1,9 @@
 general:
-  project_file:
+  shepherd_file:
     name: .shepherd
   auto_create:
     teams: true
     projects: true
-    resources: true
-    services: true
+    external_resources: true
+    services_placeholders: true
+  temp_directory: '/tmp'

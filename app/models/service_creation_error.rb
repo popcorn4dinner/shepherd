@@ -1,0 +1,3 @@
+class ServiceCreationError < Error
+
+end

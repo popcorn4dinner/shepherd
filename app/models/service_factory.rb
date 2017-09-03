@@ -1,15 +1,13 @@
 class Service
 
-  def self.from_file_content(content, repository_url)
-    service = service.new
+  def self.from_shepherd_file(repository_url)
 
-    
+    config = ServiceFileReader::from_git_repository(repository_url)
+
+    builder = ServiceBuilder.new
+
   end
 
-  private
 
-  def mandatory_fields
-    [:name, ]
-  end
 
 end
