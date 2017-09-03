@@ -1,6 +1,6 @@
 general:
   shepherd_file:
-    name: .shepherd
+    name: .shepherd.yaml
   auto_create:
     teams: true
     projects: true

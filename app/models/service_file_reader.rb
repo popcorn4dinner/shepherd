@@ -1,19 +1,15 @@
 class ServiceFileReader
 
-  mandatory_fields: [:name, :team, :project]
-  optional_fields: [:resources, :dependencies, :smoke_tests, :functional_tests]
+  MANDATORY_FIELDS = [:name, :team, :project]
+  OPTIONAL_FIELDS = [:external_resources, :dependencies, :smoke_tests, :functional_tests]
 
   def self.from_git_repository(repo_url)
 
-    folder_name = File.join(Settings.general.temp_directory, SecureRandom.uuid)
+    folder = File.join(Settings.general.temp_directory, SecureRandom.uuid)
 
-    system "git clone --no-checkout --depth 1 #{repo_url} #{folder_name} && cd #{folder_name} && git show HEAD:#{Settings.general.shepherd_file.name}"
+    git_clone repo_url, folder
 
-    if $?.exitstatus == 0
-      raise "Couldn't clone service repository."
-    end
-
-    content = YAML::load(File.open(File.join( folder_name, Settings.general.shepherd_file.name)
+    content = load_content_from folder, Settings.general.shepherd_file.name
 
     if( is_valid(content) )
       return complete content
@@ -22,24 +18,38 @@ class ServiceFileReader
 
   private
 
-  def is_valid(content)
-    mandatory_fields.each do |field|
+  def self.is_valid(content)
+    MANDATORY_FIELDS.each do |field|
       unless content.include?(field)
-        raise ServiceCreationError.new "Field '#{field}' missing."
+        raise "Field '#{field}' missing."
       end
     end
 
     return true
   end
 
-  def complete(content)
-    mandatory_fields.each do |field|
-      unless content.include?(field)
+  def self.complete(content)
+    OPTIONAL_FIELDS.each do |field|
+      unless content.include?(field.to_s)
         content[field] = []
       end
     end
 
     return content
+  end
+
+  def self.git_clone(url, folder)
+    command = "git clone --no-checkout --depth 1 #{url} #{folder} && cd #{folder} && git checkout HEAD -- #{Settings.general.shepherd_file.name}"
+
+    system command
+  end
+
+  def self.load_content_from(folder, file_name)
+    convert_keys_to_symbols(YAML::load(File.open(File.join( folder, file_name))))
+  end
+
+  def self.convert_keys_to_symbols(content)
+    content.inject({}){|memo,(k,v)| memo[k.to_sym] = v; memo}
   end
 
 end

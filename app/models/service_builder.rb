@@ -1,5 +1,11 @@
 class ServiceBuilder
 
+  def self.from_service(service)
+    @service = service
+
+    return self
+  end
+
   def add_name(name)
     service.name = name
 
@@ -13,15 +19,14 @@ class ServiceBuilder
   end
 
   def add_team(team_name)
-    team = Team.find_or_create_by(name: team_name)
-    service.team = team
+    @team = Team.find_or_create_by(name: team_name)
 
     return self
   end
 
   def add_project(project_name)
     project = Project.find_or_create_by(name: project_name)
-    project.team = project.team || service.team
+    project.team = project.team || @team
 
     service.project = project
 
@@ -37,12 +42,17 @@ class ServiceBuilder
   end
 
   def add_dependency(service_name)
-    dependency = Service.find_by(:name service_name)
-
+    dependency = Service.find_by(name: service_name)
+    unless dependency.nil?
+      service.dependencies << dependency
+    end
 
     return self
   end
 
+  def build
+    service
+  end
 
   private
 
