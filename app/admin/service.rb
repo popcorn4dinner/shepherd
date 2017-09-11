@@ -43,6 +43,7 @@ ActiveAdmin.register Service do
           row :project
           row :is_user_entry_point
           row :health_endpoint
+          row :repository_url
           row :status do
             status_tag service.status
           end

@@ -30,7 +30,7 @@ class ServiceFileReader
 
   def self.complete(content)
     OPTIONAL_FIELDS.each do |field|
-      unless content.include?(field.to_s)
+      unless content.include?(field)
         content[field] = []
       end
     end
@@ -40,16 +40,12 @@ class ServiceFileReader
 
   def self.git_clone(url, folder)
     command = "git clone --no-checkout --depth 1 #{url} #{folder} && cd #{folder} && git checkout HEAD -- #{Settings.general.shepherd_file.name}"
-
     system command
   end
 
   def self.load_content_from(folder, file_name)
-    convert_keys_to_symbols(YAML::load(File.open(File.join( folder, file_name))))
-  end
+    YAML::load(File.open(File.join( folder, file_name))).deep_symbolize_keys!
 
-  def self.convert_keys_to_symbols(content)
-    content.inject({}){|memo,(k,v)| memo[k.to_sym] = v; memo}
   end
 
 end

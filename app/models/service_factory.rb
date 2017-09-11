@@ -4,23 +4,28 @@ class ServiceFactory
 
     config = ServiceFileReader::from_git_repository(repository_url)
 
-    builder = ServiceBuilder.new
+    service = build_service_with config, ServiceBuilder.new
+    service.repository_url = repository_url
 
-    builder
-      .add_name(config[:name])
-      .add_repository_url(repository_url)
-      .add_team(config[:team])
-      .add_project(config[:project])
+    return  service
+  end
 
-    config[:external_resources].each do |resource|
-      builder.add_external_resource(resource[:name])
-    end
+  def self.update_with_shepherd_file(service)
+    config = ServiceFileReader::from_git_repository(service.repository_url)
 
-    config[:dependencies].each do |dependency|
-      builder.add_external_resource(dependency[:name])
-    end
+    return self.build_service_with config, ServiceBuilder.new(service)
+  end
 
-    return builder.build
+  private
+
+  def self.build_service_with(config, service_builder)
+      service_builder
+        .add_name(config[:name])
+        .add_team(config[:team])
+        .add_project(config[:project])
+        .replace_external_resources_with(config[:external_resources], :name)
+        .replace_dependencies_with(config[:dependencies], :name)
+        .build
   end
 
 end

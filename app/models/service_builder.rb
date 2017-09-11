@@ -1,9 +1,8 @@
 class ServiceBuilder
 
-  def self.from_service(service)
+  def initialize(service)
     @service = service
 
-    return self
   end
 
   def add_name(name)
@@ -37,6 +36,15 @@ class ServiceBuilder
     resource = ExternalResource.find_or_create_by(name: resource_name)
 
     service.external_resources << resource
+    return self
+  end
+
+  def replace_external_resources_with(records, name_key)
+    asa
+    service.external_resources = []
+    records.each do |record|
+      add_external_resource record[name_key]
+    end
 
     return self
   end
@@ -49,6 +57,17 @@ class ServiceBuilder
 
     return self
   end
+
+  def replace_dependencies_with(records, name_key)
+    service.dependencies = []
+    records.each do |record|
+      add_dependency record[name_key]
+    end
+
+    return self
+  end
+
+
 
   def build
     service
