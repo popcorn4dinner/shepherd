@@ -2,6 +2,7 @@ class ServiceFileReader
 
   MANDATORY_FIELDS = [:name, :team, :project, :description, :health_endpoint]
   OPTIONAL_FIELDS = {external_resources: [], dependencies: [], smoke_tests: [], functional_tests: [], documentation_url: nil, user_entry_point: false}
+  VERIFIER_TYPES = {smoke_tests: :smoke_test, functional_tests: :functional_test}
 
   def self.from_git_repository(repo_url)
     raise ServiceConfigurationError, 'Http is not supported. Please use ssh url instead.' if is_incompatible repo_url
@@ -37,6 +38,19 @@ class ServiceFileReader
     end
 
     return content
+  end
+
+  def combine_tests_to_verifiers(content)
+    VERIFIER_TYPES.each do |config_key|
+      verifier = content[config_key]
+      verifier[:type] = VERIFIER_TYPES[config_key]
+
+      content[:verifiers] << verifier
+      content.delete(config_key)
+
+      return content
+    end
+
   end
 
   def self.git_clone(url, folder)

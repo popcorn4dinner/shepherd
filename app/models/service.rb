@@ -19,6 +19,7 @@ class Service < ApplicationRecord
                             uniq: true
 
   has_and_belongs_to_many :external_resources
+  has_many :verifiers
 
   def documentation_url
     @documentation_url || repository_url

@@ -91,6 +91,22 @@ class ServiceBuilder
     self
   end
 
+  def add_verifier(name, url, type, runner)
+    verifier = Verifier.where(name: name, url: url, type: type, runner: runner).first_or_create
+    service.verifiers << verifier
+
+    return self
+  end
+
+  def replace_verfiers_with(records)
+    service.verifiers = []
+    records.each do |record|
+      add_verifier record[:name], record[:url], record[:type], record[:runner]
+    end
+
+    return self
+  end
+
   def build
     @service
   end

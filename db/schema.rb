@@ -12,6 +12,7 @@
 
 ActiveRecord::Schema.define(version: 20171127134854) do
 
+
   create_table "active_admin_comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "namespace"
     t.text     "body",          limit: 65535
@@ -91,6 +92,17 @@ ActiveRecord::Schema.define(version: 20171127134854) do
     t.datetime "updated_at", null: false
     t.string   "slug"
     t.index ["slug"], name: "index_teams_on_slug", unique: true, using: :btree
+  end
+
+  create_table "verifiers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "name"
+    t.string   "url"
+    t.string   "runner"
+    t.string   "type"
+    t.integer  "service_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["service_id"], name: "index_verifiers_on_service_id", using: :btree
   end
 
   add_foreign_key "dependencies", "services"
