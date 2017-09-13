@@ -1,4 +1,5 @@
 class ProjectsController < ApplicationController
+  before_action :set_projects
   before_action :set_project, only: [:show, :health]
   before_action :set_projects
 

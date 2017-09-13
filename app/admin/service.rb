@@ -29,7 +29,7 @@ ActiveAdmin.register Service do
     end
 
     f.inputs 'dependencies' do
-     f.input :dependency_ids, label: 'Dependencies', as: :text, collection: Service.all
+     f.input :dependency_ids, label: 'Dependencies', as: :tags, collection: Service.all
      f.input :external_resource_ids, label: 'External Resources', as: :tags, collection: ExternalResource.all
     end
 
