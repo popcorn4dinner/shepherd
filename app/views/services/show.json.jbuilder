@@ -5,3 +5,4 @@ json.team @service.project.team.name
 json.internal_dependencies @service.internal_dependencies, :id, :name, :status, :health_endpoint
 json.external_dependencies @service.external_dependencies, :id, :name, :status, :health_endpoint
 json.dependency_of @service.dependency_of, :id, :name, :status, :health_endpoint
+json.verifiers @service.verifiers, :name, :runner, :runner_params

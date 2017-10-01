@@ -33,9 +33,9 @@ class ServicesController < ApplicationController
 
 
     if @service.save
-
-    else
-
+      respond_to do |format|
+        format.json { render :show }
+      end
     end
 
   end

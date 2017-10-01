@@ -45,7 +45,7 @@ class ServiceFileReader
   def self.adjust_verifiers_structure(content)
     verifiers = []
 
-    content.each do |group, verifier_rows|
+    content[:verifiers].each do |group, verifier_rows|
       verifier_rows.each do |verifier_row|
         verifier = {}
 
@@ -60,14 +60,18 @@ class ServiceFileReader
           end
         end
 
-        verifiers << verfifier_row
+        verifiers << verifier
       end
     end
 
-    return verifiers
+    content[:verifiers] = verifiers
+
+    return content
   end
 
   def self.git_clone(url, folder)
+    raise ServiceCreationError.new "unsupported protocol. please use https instead" if url.include?("git@")
+
     command = "git clone --no-checkout --depth 1 #{url} #{folder} && cd #{folder} && git checkout HEAD -- #{Settings.general.shepherd_file.name}"
     system command
   end
