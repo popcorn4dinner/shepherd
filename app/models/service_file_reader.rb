@@ -46,8 +46,20 @@ class ServiceFileReader
     verifiers = []
 
     content.each do |group, verifier_rows|
-      verifier_rows.each do |verfifier_row|
-        verfifier_row[:group] = group
+      verifier_rows.each do |verifier_row|
+        verifier = {}
+
+        verifier[:name] = verifier_row[:name]
+        verifier[:runner] = verifier_row[:runner]
+        verifier[:group] = group
+        verifier[:runner_params] = {}
+
+        verifier_row.each do |key, value|
+          unless(verifier.keys.include? key)
+            verifier[:runner_params][key] = value
+          end
+        end
+
         verifiers << verfifier_row
       end
     end

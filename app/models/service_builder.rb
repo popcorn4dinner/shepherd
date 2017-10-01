@@ -91,8 +91,16 @@ class ServiceBuilder
     self
   end
 
-  def add_verifier(name, url, type, runner)
-    verifier = Verifier.where(name: name, url: url, type: type, runner: runner).first_or_create
+  def add_verifier(name, group, runner, runner_params = {})
+    verifier = Verifier.where(name: name, group: group, runner: runner).first_or_create
+
+    runner_params.each do |name, value|
+      runner_param = verifier.runner_params.where(name: name).first_or_create
+      verifier.value = value
+
+      verifier.runner_params << runner_param
+    end
+
     service.verifiers << verifier
 
     return self

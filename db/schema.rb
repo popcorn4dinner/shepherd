@@ -71,6 +71,15 @@ ActiveRecord::Schema.define(version: 20171127134854) do
     t.index ["team_id"], name: "index_projects_on_team_id", using: :btree
   end
 
+  create_table "runner_params", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "name"
+    t.string   "value"
+    t.integer  "verifier_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["verifier_id"], name: "index_runner_params_on_verifier_id", using: :btree
+  end
+
   create_table "services", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
     t.string   "health_endpoint"
@@ -98,7 +107,7 @@ ActiveRecord::Schema.define(version: 20171127134854) do
     t.string   "name"
     t.string   "url"
     t.string   "runner"
-    t.string   "type"
+    t.string   "group"
     t.integer  "service_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

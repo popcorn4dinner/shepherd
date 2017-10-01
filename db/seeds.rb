@@ -28,16 +28,16 @@ Service.create!([
   {name: "Parsing Trigger", health_endpoint: "", project_id: 1, is_user_entry_point: false, slug: "parsing-trigger"}
 ])
 
-# ExternalResources_Services.create!([
-#   {external_resource_id: 3, service_id: 8},
-#   {external_resource_id: 5, service_id: 8},
-#   {external_resource_id: 5, service_id: 5},
-#   {external_resource_id: 6, service_id: 9},
-#   {external_resource_id: 6, service_id: 10},
-#   {external_resource_id: 2, service_id: 1},
-#   {external_resource_id: 7, service_id: 9},
-#   {external_resource_id: 4, service_id: 2}
-# ])
+ExternalResources_Services.create!([
+  {external_resource_id: 3, service_id: 8},
+  {external_resource_id: 5, service_id: 8},
+  {external_resource_id: 5, service_id: 5},
+  {external_resource_id: 6, service_id: 9},
+  {external_resource_id: 6, service_id: 10},
+  {external_resource_id: 2, service_id: 1},
+  {external_resource_id: 7, service_id: 9},
+  {external_resource_id: 4, service_id: 2}
+])
 
 Dependency.create!([
   {type: nil, service_id: 2, dependency_id: 6},
