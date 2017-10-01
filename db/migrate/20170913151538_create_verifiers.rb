@@ -4,7 +4,7 @@ class CreateVerifiers < ActiveRecord::Migration[5.0]
       t.string :name
       t.string :url
       t.string :runner
-      t.string :type
+      t.string :group
       t.belongs_to :service, index: true
       t.timestamps
     end

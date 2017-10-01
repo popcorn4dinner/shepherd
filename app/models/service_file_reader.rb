@@ -1,7 +1,7 @@
 class ServiceFileReader
 
   MANDATORY_FIELDS = [:name, :team, :project, :description, :health_endpoint]
-  OPTIONAL_FIELDS = {external_resources: [], dependencies: [], smoke_tests: [], functional_tests: [], documentation_url: nil, user_entry_point: false}
+  OPTIONAL_FIELDS = {external_resources: [], dependencies: [], smoke_tests: [], functional_tests: [], verifiers: [], documentation_url: nil, user_entry_point: false}
   VERIFIER_TYPES = {smoke_tests: :smoke_test, functional_tests: :functional_test}
 
   def self.from_git_repository(repo_url)
@@ -32,6 +32,8 @@ class ServiceFileReader
 
   def self.complete(content)
     OPTIONAL_FIELDS.each do |field, default|
+      adjust_verifiers_structure  content
+
       unless content.include?(field)
         content[field] = default
       end
@@ -40,17 +42,17 @@ class ServiceFileReader
     return content
   end
 
-  def combine_tests_to_verifiers(content)
-    VERIFIER_TYPES.each do |config_key|
-      verifier = content[config_key]
-      verifier[:type] = VERIFIER_TYPES[config_key]
+  def self.adjust_verifiers_structure(content)
+    verifiers = []
 
-      content[:verifiers] << verifier
-      content.delete(config_key)
-
-      return content
+    content.each do |group, verifier_rows|
+      verifier_rows.each do |verfifier_row|
+        verfifier_row[:group] = group
+        verifiers << verfifier_row
+      end
     end
 
+    return verifiers
   end
 
   def self.git_clone(url, folder)

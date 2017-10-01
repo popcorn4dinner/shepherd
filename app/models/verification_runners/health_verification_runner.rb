@@ -1,13 +1,13 @@
 module VerificationRunners
-  class HealthVerificationRunner
-
+  class HttpOkVerificationRunner
+    
     def run(verifier)
-      response = RestClient.get verifier.service.health_endpoint
+      response = RestClient.get verifier.runner_params.url
       return response.code == 200
     end
 
     def self.required_parameters
-      []
+      [:url]
     end
 
   end
