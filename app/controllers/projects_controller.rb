@@ -1,5 +1,6 @@
 class ProjectsController < ApplicationController
   before_action :set_project, only: [:show, :health]
+  before_action :set_projects
 
   # GET /projects
   # GET /projects.json
