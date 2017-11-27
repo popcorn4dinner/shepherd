@@ -1,3 +1,0 @@
-class ServiceCreationError < Error
-
-end

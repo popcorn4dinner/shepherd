@@ -4,18 +4,25 @@ class ServicesController < ApplicationController
 
   def new
     @service = Service.new
-
   end
 
   def create
+    begin
+      @service = ServiceFactory::from_shepherd_file(service_params[:repository_url])
 
-    @service = ServiceFactory::from_shepherd_file(service_params[:repository_url])
-
-    if @service.save
-      redirect_to :root
-    else
+      if @service.save
+        redirect_to :root
+      else
+        render :action => 'new'
+      end
+    rescue ServiceConfigurationError => e
+      @service = Service.new
+      @error = e.message
       render :action => 'new'
     end
+
+
+
   end
 
   def update

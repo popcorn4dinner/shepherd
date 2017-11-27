@@ -18,6 +18,10 @@ class Service < ApplicationRecord
 
   has_and_belongs_to_many :external_resources
 
+  def documentation_url
+    @documentation_url || repository_url
+  end
+
   def internal_dependencies
     dependencies.select{|d| d.project == project}
   end

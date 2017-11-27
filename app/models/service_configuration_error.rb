@@ -1,0 +1,3 @@
+class ServiceConfigurationError < RuntimeError
+
+end

@@ -1,6 +1,6 @@
 class ServiceBuilder
 
-  def initialize(service)
+  def initialize(service = nil)
     @service = service
 
   end
@@ -8,19 +8,31 @@ class ServiceBuilder
   def add_name(name)
     service.name = name
 
-    return self
+    self
+  end
+
+  def add_description(description)
+    service.description = description
+
+    self
   end
 
   def add_repository_url(url)
     service.repository_url = url
 
-    return self
+    self
+  end
+
+  def add_documentation_url(url)
+    service.documentation_url = url.empty? ? nil : url
+
+    self
   end
 
   def add_team(team_name)
     @team = Team.find_or_create_by(name: team_name)
 
-    return self
+    self
   end
 
   def add_project(project_name)
@@ -29,14 +41,14 @@ class ServiceBuilder
 
     service.project = project
 
-    return self
+    self
   end
 
   def add_external_resource(resource_name)
     resource = ExternalResource.find_or_create_by(name: resource_name)
 
     service.external_resources << resource
-    return self
+    self
   end
 
   def replace_external_resources_with(records, name_key)
@@ -46,7 +58,7 @@ class ServiceBuilder
       add_external_resource record[name_key]
     end
 
-    return self
+    self
   end
 
   def add_dependency(service_name)
@@ -55,7 +67,7 @@ class ServiceBuilder
       service.dependencies << dependency
     end
 
-    return self
+    self
   end
 
   def replace_dependencies_with(records, name_key)
@@ -64,10 +76,8 @@ class ServiceBuilder
       add_dependency record[name_key]
     end
 
-    return self
+    self
   end
-
-
 
   def build
     service

@@ -1,9 +1,10 @@
 class ServiceFileReader
 
-  MANDATORY_FIELDS = [:name, :team, :project]
-  OPTIONAL_FIELDS = [:external_resources, :dependencies, :smoke_tests, :functional_tests]
+  MANDATORY_FIELDS = [:name, :team, :project, :description]
+  OPTIONAL_FIELDS = [:external_resources, :dependencies, :smoke_tests, :functional_tests, :documentation_url]
 
   def self.from_git_repository(repo_url)
+    raise ServiceConfigurationError, 'Http is not supported. Please use ssh url instead.' if is_compatible repo_url
 
     folder = File.join(Settings.general.temp_directory, SecureRandom.uuid)
 
@@ -11,7 +12,7 @@ class ServiceFileReader
 
     content = load_content_from folder, Settings.general.shepherd_file.name
 
-    if( is_valid(content) )
+    if is_valid(content)
       return complete content
     end
   end
@@ -21,7 +22,7 @@ class ServiceFileReader
   def self.is_valid(content)
     MANDATORY_FIELDS.each do |field|
       unless content.include?(field)
-        raise "Field '#{field}' missing."
+        raise ServiceConfigurationError, "Field '#{field}' missing."
       end
     end
 
@@ -44,8 +45,17 @@ class ServiceFileReader
   end
 
   def self.load_content_from(folder, file_name)
-    YAML::load(File.open(File.join( folder, file_name))).deep_symbolize_keys!
+    begin
+      YAML::load(File.open(File.join( folder, file_name))).deep_symbolize_keys!
+    rescue
+      {}
+    end
+  end
 
+  private
+
+  def self.is_compatible(repo_url)
+    repo_url.include? 'http'
   end
 
 end
