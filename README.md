@@ -16,13 +16,10 @@ docker-compose exec web rails db:seed
 ## Usage
 ### User interface
 #### Project overview
-![project overview](/app/assets/images/overview.png)
 
 #### Project health dashboard
-![project health](/app/assets/images/health.png)
 
 #### Administrate using ActiveAdmin
-![admin](/app/assets/images/admin.png)
 
 ### API
 */admin/projects/{project-slug}.json*
