@@ -1,6 +1,6 @@
 class ServiceBuilder
 
-  def initialize(service = nil)
+  def initialize(service = Service.new)
     @service = service
 
   end
@@ -38,6 +38,7 @@ class ServiceBuilder
   def add_project(project_name)
     project = Project.find_or_create_by(name: project_name)
     project.team = project.team || @team
+    project.save
 
     service.project = project
 
@@ -52,7 +53,6 @@ class ServiceBuilder
   end
 
   def replace_external_resources_with(records, name_key)
-    asa
     service.external_resources = []
     records.each do |record|
       add_external_resource record[name_key]
@@ -80,7 +80,7 @@ class ServiceBuilder
   end
 
   def build
-    service
+    @service
   end
 
   private

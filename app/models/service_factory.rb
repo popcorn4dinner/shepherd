@@ -19,8 +19,9 @@ class ServiceFactory
   private
 
   def self.build_service_with(config, service_builder)
-      service_builder
+    service_builder
         .add_name(config[:name])
+        .add_description(config[:description])
         .add_team(config[:team])
         .add_project(config[:project])
         .replace_external_resources_with(config[:external_resources], :name)

@@ -6,6 +6,7 @@ class Service < ApplicationRecord
   validates :health_endpoint, length: {maximum: 512}
   validates :repository_url, length: {maximum: 1024}
   validates :project, presence: true
+  validates :description, presence: true
 
   belongs_to :project
 

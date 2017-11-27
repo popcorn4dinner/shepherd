@@ -1,6 +1,20 @@
+<% unless @service.errors.empty? %>
+  <div class="row">
+    <div class="large-12 columns">
+        <div class="callout small warning">
+          <h5>Error</h5>
 
+          <ul>
+            <% @service.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+    </div>
+  </div>
+<% end %>
 
-    <div class="row" style='padding-top:20vh;'>
+<div class="row" style='padding-top:20vh;'>
 
       <div class="large-6 medium-8 small-12 large-centered small-centered columns">
         <h2 style="text-align:center; font-size: 5em"><i class="fa fa-cloud-download" aria-hidden="true"></i></h2>
