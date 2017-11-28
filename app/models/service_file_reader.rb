@@ -1,10 +1,10 @@
 class ServiceFileReader
 
-  MANDATORY_FIELDS = [:name, :team, :project, :description]
-  OPTIONAL_FIELDS = [:external_resources, :dependencies, :smoke_tests, :functional_tests, :documentation_url]
+  MANDATORY_FIELDS = [:name, :team, :project, :description, :health_endpoint]
+  OPTIONAL_FIELDS = {external_resources: [], dependencies: [], smoke_tests: [], functional_tests: [], documentation_url: nil, user_entry_point: false}
 
   def self.from_git_repository(repo_url)
-    raise ServiceConfigurationError, 'Http is not supported. Please use ssh url instead.' if is_compatible repo_url
+    raise ServiceConfigurationError, 'Http is not supported. Please use ssh url instead.' if is_incompatible repo_url
 
     folder = File.join(Settings.general.temp_directory, SecureRandom.uuid)
 
@@ -30,9 +30,9 @@ class ServiceFileReader
   end
 
   def self.complete(content)
-    OPTIONAL_FIELDS.each do |field|
+    OPTIONAL_FIELDS.each do |field, default|
       unless content.include?(field)
-        content[field] = []
+        content[field] = default
       end
     end
 
@@ -54,7 +54,7 @@ class ServiceFileReader
 
   private
 
-  def self.is_compatible(repo_url)
+  def self.is_incompatible(repo_url)
     repo_url.include? 'http'
   end
 

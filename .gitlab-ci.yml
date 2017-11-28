@@ -1,0 +1,66 @@
+
+variables:
+
+  DOCKER_DRIVER: overlay2
+
+  IMAGE_NAME: tools/builds
+  ECS_SERVICE: tools_builds
+
+  ECR_URL: 338187768765.dkr.ecr.eu-central-1.amazonaws.com
+  ECR_REPOSITORY: $ECR_URL/$IMAGE_NAME
+  DESIRED_INSTANCE_COUNT: 1
+
+  # The commit image to push to Gitlab repository
+  IMAGE_TAG: $ECR_REPOSITORY:$CI_COMMIT_REF_NAME
+  AWS_DEFAULT_REGION: eu-central-1
+  TIMEOUT: 600 #seconds
+
+  # Deploy strategies
+  BLUE_GREEN: -m 50 -M 100
+  UPDATE: -m 100 -M 200
+  REPLACE: -m 0 -M 100
+
+stages:
+  - test
+  - build
+  - deploy
+
+
+test mocha:
+  stage: test
+  script:
+  - yarn install
+  - yarn run ci
+  tags:
+  - yarn
+
+build docker image:
+  stage: build
+  script:
+    - docker build -t $IMAGE_NAME .
+    - docker tag $IMAGE_NAME:latest $ECR_REPOSITORY:latest
+    - docker tag $IMAGE_NAME:latest $ECR_REPOSITORY:$CI_COMMIT_SHA
+    - docker push $ECR_REPOSITORY:latest
+    - docker push $ECR_REPOSITORY:$CI_COMMIT_SHA
+  tags:
+    - docker
+
+adjust infractructure:
+  stage: build
+  script:
+    - terraform init
+    - terraform apply
+  tags:
+    - terraform
+
+deploy to development environment:
+  stage: deploy
+  environment:
+    name: development
+    url: $PROJECT_SLUG.tools.seeds.stepstone.com
+  script:
+    - ecs-deploy -c tools -n ${ECS_SERVICE}_tools -i $ECR_REPOSITORY $UPDATE -t $TIMEOUT -D $DESIRED_INSTANCE_COUNT -e CI_COMMIT_SHA
+  tags:
+    - ECS
+  only:
+    - master
