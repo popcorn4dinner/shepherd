@@ -21,18 +21,9 @@ variables:
   REPLACE: -m 0 -M 100
 
 stages:
-  - test
   - build
   - deploy
 
-
-test mocha:
-  stage: test
-  script:
-  - yarn install
-  - yarn run ci
-  tags:
-  - yarn
 
 build docker image:
   stage: build
