@@ -10,6 +10,7 @@ services:
     command: ./start.sh
     volumes:
       - .:/app
+      - /Users/schnib01/.ssh:/root/.ssh
     ports:
       - "80:4000"
     depends_on:

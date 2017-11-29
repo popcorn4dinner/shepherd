@@ -103,8 +103,16 @@ GEM
     capistrano-rbenv (2.1.3)
       capistrano (~> 3.1)
       sshkit (~> 1.3)
+    capistrano-upload-config (0.7.0)
+      capistrano (>= 3.0)
     capistrano-yarn (2.0.2)
       capistrano (~> 3.0)
+    capistrano3-nginx (2.1.6)
+      capistrano (>= 3.0.0)
+    capistrano3-puma (3.1.1)
+      capistrano (~> 3.7)
+      capistrano-bundler
+      puma (~> 3.4)
     coderay (1.1.2)
     coffee-rails (4.2.2)
       coffee-script (>= 2.2.0)
@@ -309,7 +317,10 @@ DEPENDENCIES
   capistrano-passenger
   capistrano-rails
   capistrano-rbenv
+  capistrano-upload-config
   capistrano-yarn
+  capistrano3-nginx
+  capistrano3-puma
   coffee-rails (~> 4.2)
   config
   font-awesome-sass
@@ -335,4 +346,4 @@ DEPENDENCIES
   web-console (>= 3.3.0)
 
 BUNDLED WITH
-   1.15.3
+   1.16.0

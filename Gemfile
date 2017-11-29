@@ -43,7 +43,6 @@ gem 'rest-client'
 gem 'gon'
 gem 'friendly_id', '~> 5.1.0'
 gem 'config'
-
 gem 'jquery-ui-rails', '~> 5.0.4'
 gem 'foundation-rails', '~> 6.4'
 gem 'font-awesome-sass'
@@ -52,11 +51,6 @@ gem 'font-awesome-sass'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
-  gem "capistrano"
-  gem "capistrano-rails"
-  gem "capistrano-passenger"
-  gem "capistrano-yarn"
-  gem "capistrano-rbenv"
 end
 
 group :development do
@@ -68,6 +62,14 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'better_errors'
   gem 'binding_of_caller'
+  gem "capistrano"
+  gem "capistrano-rails"
+  gem "capistrano-passenger"
+  gem "capistrano-yarn"
+  gem "capistrano-rbenv"
+  gem 'capistrano3-puma'
+  gem 'capistrano3-nginx'
+  gem 'capistrano-upload-config'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
