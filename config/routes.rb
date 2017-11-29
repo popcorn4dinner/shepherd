@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   root to: 'projects#index'
 
   resources :services, only: [:new, :create]
-  get '/services/:id/update', to: 'services#update', as: 'service_update'
+  post '/services/:id/update', to: 'services#update', as: 'service_update'
 
   get '/projects/:id/health', to: 'projects#health', as: 'project_health'
   get '/projects/:id', to: 'projects#show', as: 'project'
