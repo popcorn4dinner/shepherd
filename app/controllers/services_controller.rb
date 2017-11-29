@@ -1,6 +1,7 @@
 class ServicesController < ApplicationController
 
   before_action :set_projects
+  skip_before_action :verify_authenticity_token
 
   def new
     @service = Service.new
