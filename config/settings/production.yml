@@ -1,0 +1,9 @@
+general:
+  shepherd_file:
+    name: .shepherd.yaml
+  auto_create:
+    teams: true
+    projects: true
+    external_resources: true
+    services_placeholders: true
+  temp_directory: '/tmp'
