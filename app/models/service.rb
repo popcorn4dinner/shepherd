@@ -70,10 +70,6 @@ class Service < ApplicationRecord
     end
   end
 
-  def root_url
-
-  end
-
   def health_endpoint_url
     service_url_resolver.resolve(health_endpoint)
   end
