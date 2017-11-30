@@ -3,12 +3,11 @@ class Verifier < ApplicationRecord
   belongs_to :service
   has_many :runner_params
 
-  validates :name, :parms, :group, :service, presence: true
-  validates :runner_name, inclusion: { in: self.available_runners }
+  validates :name, :group, :service, presence: true
+  validates_inclusion_of  :runner_name, in: -> { self.available_runners }
 
   validates_associated :runner_params
   validate :presence_of_required_runner_params
-
 
   def run
     runner.run(self)
@@ -38,6 +37,8 @@ class Verifier < ApplicationRecord
     @@runner_types = {}
 
     self.runner_classes.each do |runner_class|
+
+      as
       @@runner_types[self.runner_name_for(runner_class)] = runner_class
     end
 

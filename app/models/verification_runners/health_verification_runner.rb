@@ -1,6 +1,6 @@
 module VerificationRunners
-  class HttpOkVerificationRunner
-    
+  class HealthVerificationRunner
+
     def run(verifier)
       response = RestClient.get verifier.runner_params.url
       return response.code == 200

@@ -1,5 +1,5 @@
 module VerificationRunners
-  class HealthVerificationRunner
+  class HttpOkVerificationRunner
 
     def run(verifier)
       response = RestClient.get verifier.service.health_endpoint

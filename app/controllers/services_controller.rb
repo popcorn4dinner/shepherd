@@ -46,7 +46,4 @@ class ServicesController < ApplicationController
     params.require(:service).permit(:id, :repository_url)
   end
 
-  def service
-    @service || Service.find(slug: params[:id])
-  end
 end

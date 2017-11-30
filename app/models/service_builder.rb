@@ -82,8 +82,8 @@ class ServiceBuilder
     self
   end
 
-  def replace_dependencies_with(records)
-    service.dependencies = []
+  def replace_dependencies_with(records, name_key)
+    service.dependencies.delete_all unless service.new_record?
     records.each do |record|
       add_dependency record
     end
@@ -92,24 +92,20 @@ class ServiceBuilder
   end
 
   def add_verifier(name, group, runner, runner_params = {})
-    verifier = Verifier.where(name: name, group: group, runner: runner).first_or_create
+    verifier = Verifier.new(name: name, group: group, runner_name: runner)
 
-    runner_params.each do |name, value|
-      runner_param = verifier.runner_params.where(name: name).first_or_create
-      verifier.value = value
-
-      verifier.runner_params << runner_param
-    end
+    verifier.runner_params = runner_params.map { |name, value| RunnerParam.new(name: name,value: value) }
 
     service.verifiers << verifier
 
     return self
   end
 
-  def replace_verfiers_with(records)
-    service.verifiers = []
+  def replace_verifiers_with(records)
+    service.verifiers.delete_all unless service.new_record?
+
     records.each do |record|
-      add_verifier record[:name], record[:url], record[:type], record[:runner]
+      add_verifier record[:name], record[:group], record[:runner], record[:runner_params]
     end
 
     return self

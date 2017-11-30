@@ -105,12 +105,11 @@ ActiveRecord::Schema.define(version: 20171127134854) do
 
   create_table "verifiers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
-    t.string   "url"
-    t.string   "runner"
+    t.string   "runner_name"
     t.string   "group"
     t.integer  "service_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
     t.index ["service_id"], name: "index_verifiers_on_service_id", using: :btree
   end
 
