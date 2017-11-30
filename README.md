@@ -21,6 +21,49 @@ docker-compose exec web rails db:seed
 
 #### Administrate using ActiveAdmin
 
+### Shepherd project files
+You can import all information about your service from a `.shepherd.yaml` file in your project repository.  
+This allows you to let your dependency documentation evolve together with the features you add.
+If you are using a Continuous integration / Continuous Delivery solution like GitlabCI, Bamboo or GoCD, you can call 
+the endpoint `POST /service/{service-name}/update` to reimport the `.shepherd.yaml` file automatically from your project
+ repository.
+#### Basic Information
+
+```yaml
+name: awesome-video-compressor
+team: some team
+project: Awesome Streaming 
+description: This microservice compresses video streams and stores them in a s3 bucket
+documentaion_url: http://optional-url-to-your-docs
+```
+
+#### Health monitoring
+You can use Shepherd to monitor the health of your services in production.  
+In order to do so, you have to add either of the following lines to your `.shepherd.yaml` file.  
+  
+##### Simple url
+```yaml
+health_endpoint: http://awesome-video-processor-url/ping
+```
+
+##### Serivce discovery  
+At the moment only `consul` service discovery is supported.
+```yaml
+health_endpoint: consul:awesome-video-comppressor 
+
+```
+
+#### External Resources
+External resources are things like Databases, Filesystems, Queues, etc. 
+Basically everything you need to be in your dependency tree, but is not a microservice.
+In your `.shepherd.yaml` file it looks something like this:
+```yaml
+external_resources:
+  - name: MySQL Database
+  - name: RabbitMQ
+  - name: Legacy Appliction XYZ
+```
+
 ### API
 */admin/projects/{project-slug}.json*
 
@@ -57,7 +100,7 @@ docker-compose exec web rails db:seed
   "created_at":"2017-03-07T15:01:24.000Z",
   "updated_at":"2017-03-23T23:37:23.000Z",
   "project":"Pay Per X",
-  "team":"Wolf Team",
+  "team":"Some Team",
   "internal_dependencies":[
       {
         "id":10,
@@ -78,3 +121,6 @@ docker-compose exec web rails db:seed
     ]
   }
   ```
+  
+## Installation
+
