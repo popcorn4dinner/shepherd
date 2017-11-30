@@ -46,6 +46,7 @@ gem 'config'
 gem 'jquery-ui-rails', '~> 5.0.4'
 gem 'foundation-rails', '~> 6.4'
 gem 'font-awesome-sass'
+gem 'diplomat'
 
 
 group :development, :test do

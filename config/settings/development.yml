@@ -7,3 +7,5 @@ general:
     external_resources: true
     services_placeholders: true
   temp_directory: '/tmp'
+  consul_url: 'consul-dev.seeds.stepstone.com'
+  consul_port: '8500'

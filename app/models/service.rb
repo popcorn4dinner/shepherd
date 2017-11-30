@@ -1,5 +1,6 @@
 class Service < ApplicationRecord
   extend FriendlyId
+
   friendly_id :name, use: [:slugged, :finders]
 
   validates :name, presence: true, uniqueness: true
@@ -69,17 +70,29 @@ class Service < ApplicationRecord
     end
   end
 
+  def root_url
+
+  end
+
+  def health_endpoint_url
+    service_url_resolver.resolve(health_endpoint)
+  end
+
   private
 
   def current_status_code
     Rails.cache.fetch("#{name}.status", expires_in: 5.seconds) do
       begin
-        response = RestClient.get health_endpoint
+        response = RestClient.get health_endpoint_url
         return response.code
-      rescue
+      rescue RestClient::Exception
         return 500
       end
     end
+  end
+
+  def service_url_resolver
+    @@service_url_resolver ||= ServiceUrlResolver.new
   end
 
 
