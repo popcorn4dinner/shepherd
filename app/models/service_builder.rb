@@ -64,10 +64,10 @@ class ServiceBuilder
     self
   end
 
-  def replace_external_resources_with(records, name_key)
+  def replace_external_resources_with(records)
     service.external_resources = []
     records.each do |record|
-      add_external_resource record[name_key]
+      add_external_resource record
     end
 
     self
@@ -82,10 +82,10 @@ class ServiceBuilder
     self
   end
 
-  def replace_dependencies_with(records, name_key)
+  def replace_dependencies_with(records)
     service.dependencies = []
     records.each do |record|
-      add_dependency record[name_key]
+      add_dependency record
     end
 
     self

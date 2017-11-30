@@ -52,6 +52,19 @@ At the moment only `consul` service discovery is supported.
 health_endpoint: consul:awesome-video-comppressor 
 
 ```
+#### User entry point
+This key is to document, if this service is being directly accessed by users of your system. Default is `false`.
+```yaml
+user_entry_point: true
+```
+
+#### Dependencies
+This section of your `.shepherd.yaml` file lets you define what the critical dependencies you have on other (mirco)services in your system are.
+```yaml
+dependencies:
+    - awesome-storage-service
+    - awesome-video-encoding-service
+```
 
 #### External Resources
 External resources are things like Databases, Filesystems, Queues, etc. 
@@ -59,9 +72,9 @@ Basically everything you need to be in your dependency tree, but is not a micros
 In your `.shepherd.yaml` file it looks something like this:
 ```yaml
 external_resources:
-  - name: MySQL Database
-  - name: RabbitMQ
-  - name: Legacy Appliction XYZ
+  - MySQL Database
+  - RabbitMQ
+  - Legacy Appliction XYZ
 ```
 
 ### API
