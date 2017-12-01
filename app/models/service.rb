@@ -19,7 +19,7 @@ class Service < ApplicationRecord
                             uniq: true
 
   has_and_belongs_to_many :external_resources
-  has_many :verifiers
+  has_many :verifiers, inverse_of: :service, autosave: true
 
   def documentation_url
     @documentation_url || repository_url
@@ -44,7 +44,7 @@ class Service < ApplicationRecord
       result << implicit_dependencies
     end
 
-    return result.flatten.uniq
+    result.flatten.uniq
   end
 
   def dependency_of
@@ -53,7 +53,7 @@ class Service < ApplicationRecord
       services << dependency.service
     end
 
-    return services
+    services
   end
 
   def status
@@ -84,6 +84,8 @@ class Service < ApplicationRecord
         return response.code
       rescue RestClient::Exception
         return 500
+      rescue URI::InvalidURIError
+        return 499
       end
     end
   end

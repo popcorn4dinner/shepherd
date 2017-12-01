@@ -1,27 +1,32 @@
 class Verifier < ApplicationRecord
 
-  belongs_to :service
-  has_many :runner_params
+  belongs_to :service, inverse_of: :verifiers
+  has_many :runner_params, autosave: true
 
-  validates :name, :group, :service, presence: true
-  validates_inclusion_of  :runner_name, in: -> { self.available_runners }
+  validates :name, :group, presence: true
+  validates_inclusion_of  :runner_name, in: Proc.new { self.available_runners }
 
+  accepts_nested_attributes_for :runner_params
   validates_associated :runner_params
-  validate :presence_of_required_runner_params
+  # validate :presence_of_required_runner_params
+
+  @@runner_types = nil
 
   def run
     runner.run(self)
   end
 
   def self.available_runners
-    self.runners.keys
+    self.runners
   end
 
   private
 
   def presence_of_required_runner_params
-    runner.required_parameters.each do |parameter_name|
-       errors.add(:runner_params, "#{parameter_name} is missing for runner '#{runner_name}'")
+    if runner.respond_to? :required_parameters
+      runner.required_parameters.each do |parameter_name|
+        errors.add(:runner_params, "#{parameter_name} is missing for runner '#{runner_name}'") if runner_params.find_by(name: parameter_name).nil?
+      end
     end
   end
 
@@ -34,25 +39,15 @@ class Verifier < ApplicationRecord
   end
 
   def self.load_runner_types
-    @@runner_types = {}
-
-    self.runner_classes.each do |runner_class|
-
-      as
-      @@runner_types[self.runner_name_for(runner_class)] = runner_class
-    end
-
-    return @@runner_types
+    self.runner_classes.map { |runner_class| [self.runner_name_for(runner_class), "VerificationRunners::#{runner_class}".constantize]}.to_h
   end
 
   def self.runner_name_for(runner_class)
-    self.runner_class.class.name.gsub('Runner', '').underscore
+    runner_class.to_s.gsub('Runner', '').underscore
   end
 
   def self.runner_classes
-    VerificationRunners.constants.select { |c| VerificationRunners.const_get(c).is_a? Class }
+    Dir.glob(File.join(Rails.root, "app", "models", "verification_runners", "*")).collect{|file_path| File.basename(file_path, '.rb')}.map{|n| n.camelize}
   end
-
-
 
 end

@@ -31,9 +31,9 @@ class ServiceFileReader
   end
 
   def self.complete(content)
-    OPTIONAL_FIELDS.each do |field, default|
-      adjust_verifiers_structure  content
+    content = adjust_verifiers_structure  content
 
+    OPTIONAL_FIELDS.each do |field, default|
       unless content.include?(field)
         content[field] = default
       end
@@ -70,7 +70,6 @@ class ServiceFileReader
   end
 
   def self.git_clone(url, folder)
-    raise ServiceCreationError.new "unsupported protocol. please use https instead" if url.include?("git@")
 
     command = "git clone --no-checkout --depth 1 #{url} #{folder} && cd #{folder} && git checkout HEAD -- #{Settings.general.shepherd_file.name}"
     system command
@@ -87,7 +86,7 @@ class ServiceFileReader
   private
 
   def self.is_incompatible(repo_url)
-    repo_url.include? 'http'
+    not repo_url.start_with? 'git@'
   end
 
 end

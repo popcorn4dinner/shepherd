@@ -1,6 +1,7 @@
 class RunnerParam < ApplicationRecord
 
   belongs_to :verifier
-  validates :name, :value, :verifier, presence: true
+  validates :name, :value, presence: true
+  
 
 end
