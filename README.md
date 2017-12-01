@@ -76,6 +76,37 @@ external_resources:
   - RabbitMQ
   - Legacy Appliction XYZ
 ```
+### Verifiers
+You can use Shepherd to test your (micro)service and all services that depend on it 
+for example when you just released a new version of it.
+Like that you can easily ensure that your changes dont have unforeseen side effects.
+Call `GET /services/{service-name}/verify`. A response might looks like this:
+
+```json
+[
+  {
+    "awesome-service": [
+      {
+      "Simple Check": true
+      }
+   ]
+  }
+]
+
+```
+#### Configuration
+To tell shepherd how to test your service, you need to add a `verifiers` section to your `.shepherd.yaml' file.  
+Right now, two types are supported: `health_verification` and `http_ok_verification`.
+```yaml
+    verifiers:
+      smoke_tests:
+        - name: Healthy
+          runner: health_verification
+      funtional_tests:
+        - name: Simple Http Check
+          runner: http_ok_verification
+          url: http://some-fancy-test-url
+```
 
 ### API
 */admin/projects/{project-slug}.json*

@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   resources :services, only: [:new, :create]
   post '/services/:id/update', to: 'services#update', as: 'service_update'
 
+  get '/services/:id/verify', to: 'services#verify', as: 'service_verification'
+
   get '/projects/:id/health', to: 'projects#health', as: 'project_health'
   get '/projects/:id', to: 'projects#show', as: 'project'
   get '/projects', to: 'projects#index', as: 'projects'

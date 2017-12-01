@@ -1,6 +1,6 @@
 class ServicesController < ApplicationController
 
-  before_action :set_projects
+  before_action :set_projects, :set_service
   skip_before_action :verify_authenticity_token
 
   def new
@@ -27,8 +27,6 @@ class ServicesController < ApplicationController
   end
 
   def update
-    @service = Service.friendly.find(params[:id])
-
     @service = ServiceFactory::update_with_shepherd_file(@service)
 
 
@@ -40,10 +38,18 @@ class ServicesController < ApplicationController
 
   end
 
+  def verify
+    render json: @service.verify_deep!
+  end
+
   private
 
   def service_params
     params.require(:service).permit(:id, :repository_url)
+  end
+
+  def set_service
+    @service = Service.friendly.find(params[:id])
   end
 
 end

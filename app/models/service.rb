@@ -21,6 +21,16 @@ class Service < ApplicationRecord
   has_and_belongs_to_many :external_resources
   has_many :verifiers, inverse_of: :service, autosave: true
 
+  def verify!
+    verifiers.map do |verifier|
+      { verifier.name => verifier.run }
+    end
+  end
+
+  def verify_deep!
+    dependencies.map {|d| {d.name => d.verify!} } << {name => verify!}
+  end
+
   def documentation_url
     @documentation_url || repository_url
   end
