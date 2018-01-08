@@ -3,6 +3,7 @@ class ServiceFactory
   def self.from_shepherd_file(repository_url)
 
     config = ServiceFileReader::from_git_repository(repository_url)
+    Rails.logger.debug "========= here ========="
     Rails.logger.debug config.inspect
 
     service = build_service_with config, ServiceBuilder.new
