@@ -31,13 +31,14 @@ class ServiceFileReader
   end
 
   def self.complete(content)
-    content = adjust_verifiers_structure  content
 
     OPTIONAL_FIELDS.each do |field, default|
       unless content.include?(field)
         content[field] = default
       end
     end
+
+    content = adjust_verifiers_structure  content
 
     return content
   end
