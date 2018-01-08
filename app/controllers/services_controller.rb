@@ -1,7 +1,8 @@
 class ServicesController < ApplicationController
 
   before_action :set_projects
-  before_action :set_service, except: :new
+  before_action :set_service, except: [:new, :update]
+
   skip_before_action :verify_authenticity_token
 
   def new
