@@ -80,7 +80,8 @@ class ServiceFileReader
     begin
       YAML::load(File.open(File.join( folder, file_name))).deep_symbolize_keys!
     rescue
-      {}
+      raise ServiceConfigurationError,
+            "Unable to read service configuration file. Check the following file #{File.join( folder, file_name)}"
     end
   end
 
