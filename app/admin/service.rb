@@ -1,12 +1,14 @@
 ActiveAdmin.register Service do
 
  permit_params :name,
-              :health_endpoint,
-              :project_id,
-              :is_user_entry_point,
-              :repository_url,
-              dependency_ids: [],
-              external_resource_ids: []
+               :description,
+               :health_endpoint,
+               :project_id,
+               :is_user_entry_point,
+               :repository_url,
+               external_resource_ids: [],
+               dependency_ids: []
+
 
  index do
    column :name
@@ -23,6 +25,7 @@ ActiveAdmin.register Service do
     f.inputs 'Service' do
       f.input :name
       f.input :project
+      f.input :description, as: :text
       f.input :health_endpoint
       f.input :repository_url
       f.input :is_user_entry_point, as: :boolean, default: false
