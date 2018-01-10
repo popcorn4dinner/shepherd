@@ -32,7 +32,7 @@ class Service < ApplicationRecord
   end
 
   def documentation_url
-    @documentation_url || repository_url
+    @documentation_url || repository_url.sub(':', '/').sub('git@', 'http://').sub('.git', '')
   end
 
   def internal_dependencies

@@ -44,6 +44,9 @@ ActiveAdmin.register Service do
         attributes_table_for service do
           row :name
           row :project
+          row :documentation do
+            link_to 'click here', service.documentation_url , target: :_blank
+          end
           row :is_user_entry_point
           row :health_endpoint
           row :repository_url
