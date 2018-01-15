@@ -31,10 +31,6 @@ class Service < ApplicationRecord
     dependencies.map {|d| {d.name => d.verify!} } << {name => verify!}
   end
 
-  def documentation_url
-    @documentation_url || repository_url.sub(':', '/').sub('git@', 'http://').sub('.git', '')
-  end
-
   def internal_dependencies
     dependencies.select{|d| d.project == project}
   end

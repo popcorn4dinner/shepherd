@@ -45,7 +45,9 @@ ActiveAdmin.register Service do
           row :name
           row :project
           row :documentation do
-            link_to 'click here', service.documentation_url , target: :_blank
+            documentation_url = service.documentation_url ||
+                                service.repository_url.sub(':', '/').sub('git@', 'http://').sub('.git', '')
+            link_to 'click here', documentation_url , target: :_blank
           end
           row :is_user_entry_point
           row :health_endpoint
