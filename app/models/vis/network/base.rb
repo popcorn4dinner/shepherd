@@ -40,15 +40,22 @@ module Vis
       end
 
       def find_or_create_node_group(name, type, options = {})
-        group = groups.detect { |group| group.name.eql? name }
+        group = groups.detect { |g| g.name.eql? name }
+
         unless group.present?
-          if type.present? && !type_exists_for?(:node, type)
-            raise ArgumentError, "Type #{type} does not exist.", caller
-          else
-            group = Network::NodeGroup.new name, type, options
-            groups << group
-          end
+          group = create_node_group name, type, options
         end
+
+        return group
+      end
+
+      def create_node_group(name, type, options = {})
+        if type.present? && !type_exists_for?(:node, type)
+          raise ArgumentError, "Type #{type} does not exist.", caller
+        end
+
+        group = Network::NodeGroup.new name, type, options
+        groups << group
 
         return group
       end

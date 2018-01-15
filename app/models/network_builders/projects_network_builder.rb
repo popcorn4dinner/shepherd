@@ -57,7 +57,7 @@ module NetworkBuilders
 
       def process_project(network, project)
         group_name = group_name_for(project)
-        network.find_or_create_node_group group_name, nil, project_options
+        network.create_node_group group_name, nil, project_options
         project_node = network.find_node_by_name project.name
 
         return project_node || network.add_node(project.name, :project, group_name)
