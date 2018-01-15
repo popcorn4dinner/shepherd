@@ -66,6 +66,10 @@ class Service < ApplicationRecord
     services
   end
 
+  def external_dependency_of
+    dependency_of.select{|d| d.project != project}
+  end
+
   def status
     if health_endpoint.present?
       case current_status_code

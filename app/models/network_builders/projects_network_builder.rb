@@ -35,7 +35,7 @@ module NetworkBuilders
 
       def project_connections_for(project)
         project.services.select do |s|
-          s.external_dependencies.any? || s.is_user_entry_point || s.dependency_of.any?
+          s.external_dependencies.any? || s.is_user_entry_point || s.external_dependency_of.any?
         end
       end
 
