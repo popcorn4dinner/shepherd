@@ -1,0 +1,6 @@
+#+TODO: TODO(t) STARTED(s) WAITING(w) | DONE(d) CANCELED(c)
+
+* TODO API tests based on swagger/openAPI files
+* TODO Aggregated API overview per project/total
+* STARTED Create security test runner using owasp_zap
+* 
