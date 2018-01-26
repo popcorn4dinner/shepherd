@@ -90,7 +90,7 @@ class Service < ApplicationRecord
   private
 
   def current_status_code
-    Rails.cache.fetch("#{name}.status", expires_in: 5.seconds) do
+    Rails.cache.fetch("#{name}.status", expires_in: 20.seconds) do
       begin
         response = RestClient.get health_endpoint_url
         return response.code
