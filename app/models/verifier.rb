@@ -1,10 +1,11 @@
-class Verifier < ApplicationRecord
+# frozen_string_literal: true
 
+class Verifier < ApplicationRecord
   belongs_to :service, inverse_of: :verifiers
   has_many :runner_params, autosave: true
 
   validates :name, :group, presence: true
-  validates_inclusion_of  :runner_name, in: Proc.new { self.available_runners }
+  validates_inclusion_of :runner_name, in: proc { available_runners }
 
   accepts_nested_attributes_for :runner_params
   validates_associated :runner_params
@@ -17,17 +18,23 @@ class Verifier < ApplicationRecord
   end
 
   def self.available_runners
-    self.runners
+    runners
   end
 
   private
 
   def presence_of_required_runner_params
-    if runner.respond_to? :required_parameters
-      runner.required_parameters.each do |parameter_name|
-        errors.add(:runner_params, "#{parameter_name} is missing for runner '#{runner_name}'") if runner_params.find_by(name: parameter_name).nil?
+    return true unless runner.respond_to? :required_parameters
+
+    runner.required_parameters.each do |parameter|
+      unless runner_param_for? parameter
+        errors.add :runner_params, "#{parameter} is missing for runner '#{runner_name}'"
       end
     end
+  end
+
+  def runner_param_for?(parameter)
+    runner_params.find_by(name: parameter).nil?
   end
 
   def runner
@@ -35,11 +42,11 @@ class Verifier < ApplicationRecord
   end
 
   def self.runners
-    @@runner_types ||= self.load_runner_types
+    @@runner_types ||= load_runner_types
   end
 
   def self.load_runner_types
-    self.runner_classes.map { |runner_class| [self.runner_name_for(runner_class), "VerificationRunners::#{runner_class}".constantize]}.to_h
+    runner_classes.map { |runner_class| [runner_name_for(runner_class), "VerificationRunners::#{runner_class}".constantize] }.to_h
   end
 
   def self.runner_name_for(runner_class)
@@ -47,7 +54,6 @@ class Verifier < ApplicationRecord
   end
 
   def self.runner_classes
-    Dir.glob(File.join(Rails.root, "app", "models", "verification_runners", "*")).collect{|file_path| File.basename(file_path, '.rb')}.map{|n| n.camelize}
+    Dir.glob(File.join(Rails.root, 'app', 'business', 'verification_runners', '*')).collect { |file_path| File.basename(file_path, '.rb') }.map(&:camelize)
   end
-
 end
