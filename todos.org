@@ -3,4 +3,9 @@
 * TODO API tests based on swagger/openAPI files
 * TODO Aggregated API overview per project/total
 * STARTED Create security test runner using owasp_zap
-* 
+* STARTED Enable background processing
+* WAITING Add slack notification per team
+* TODO Add Authentification
+* STARTED Create stepstone health check verification runner
+* TODO generate project interdependency heat maps
+* TODO Introduce plugin mechanism for conventions

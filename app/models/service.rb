@@ -1,22 +1,24 @@
+# frozen_string_literal: true
+
 class Service < ApplicationRecord
   extend FriendlyId
 
-  friendly_id :name, use: [:slugged, :finders]
+  friendly_id :name, use: %i[slugged finders]
 
   validates :name, presence: true, uniqueness: true
-  validates :health_endpoint, length: {maximum: 512}
-  validates :repository_url, length: {maximum: 1024}
+  validates :health_endpoint, length: { maximum: 512 }
+  validates :repository_url, length: { maximum: 1024 }
   validates :project, presence: true
   validates :description, presence: true
 
   belongs_to :project
 
   has_and_belongs_to_many :dependencies,
-                            class_name: 'Service',
-                            join_table: :dependencies,
-                            foreign_key: :service_id,
-                            association_foreign_key: :dependency_id,
-                            uniq: true
+                          class_name: 'Service',
+                          join_table: :dependencies,
+                          foreign_key: :service_id,
+                          association_foreign_key: :dependency_id,
+                          uniq: true
 
   has_and_belongs_to_many :external_resources
   has_many :verifiers, inverse_of: :service, autosave: true
@@ -28,11 +30,11 @@ class Service < ApplicationRecord
   end
 
   def verify_deep!
-    dependencies.map {|d| {d.name => d.verify!} } << {name => verify!}
+    dependencies.map { |d| { d.name => d.verify! } } << { name => verify! }
   end
 
   def internal_dependencies
-    dependencies.select{|d| d.project == project}
+    dependencies.select { |d| d.project == project }
   end
 
   def external_dependencies
@@ -40,13 +42,13 @@ class Service < ApplicationRecord
   end
 
   def direct_external_dependencies
-    dependencies.select{|d| d.project != project}
+    dependencies.reject { |d| d.project == project }
   end
 
   def implicit_dependencies
     result = []
     external_resources.each do |resource|
-      implicit_dependencies = resource.services.select{|s| s.project != project}
+      implicit_dependencies = resource.services.reject { |s| s.project == project }
       result << implicit_dependencies
     end
 
@@ -63,7 +65,7 @@ class Service < ApplicationRecord
   end
 
   def external_dependency_of
-    dependency_of.select{|d| d.project != project}
+    dependency_of.reject { |d| d.project == project }
   end
 
   def status
@@ -103,6 +105,4 @@ class Service < ApplicationRecord
   def service_url_resolver
     @@service_url_resolver ||= ServiceUrlResolver.new
   end
-
-
 end
