@@ -45,6 +45,7 @@ gem 'inherited_resources', github: 'activeadmin/inherited_resources'
 gem 'jquery-ui-rails', '~> 5.0.4'
 gem 'rest-client'
 gem 'seed_dump'
+gem 'slack-notifier'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

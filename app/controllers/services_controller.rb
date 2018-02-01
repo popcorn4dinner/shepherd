@@ -41,7 +41,13 @@ class ServicesController < ApplicationController
   end
 
   def verify
-    render json: @service.verify_deep!
+    results = @service.verify_deep!
+
+    results.each do |service_name, result|
+      Notifications::ServiceVerification.new()
+    end
+
+    render json: results
   end
 
   private

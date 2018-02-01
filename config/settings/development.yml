@@ -7,5 +7,9 @@ general:
     external_resources: true
     services_placeholders: true
   temp_directory: '/tmp'
+service_discovery:
   consul_url: 'http://consul-dev.seeds.stepstone.com'
   consul_port: '8500'
+notifications:
+  default_slack_channel: '#default'
+  slack_user_name: 'Shepherd'

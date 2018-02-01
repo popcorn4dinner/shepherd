@@ -1,6 +1,6 @@
 Diplomat.configure do |config|
   # Set up a custom Consul URL
-  config.url = "#{Settings.general.consul_url}:#{Settings.general.consul_port}"
+  config.url = "#{Settings.service_discovery.consul_url}:#{Settings.service_discovery.consul_port}"
   # Set up a custom Faraday Middleware
   # config.middleware = MyCustomMiddleware
   # Connect into consul with custom access token (ACL)

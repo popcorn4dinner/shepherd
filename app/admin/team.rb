@@ -14,4 +14,11 @@ ActiveAdmin.register Team do
 
     f.actions
   end
+
+  index do
+    column :name
+    column :slag
+    column :channel_name
+    actions
+  end
 end

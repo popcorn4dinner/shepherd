@@ -14,14 +14,45 @@ class Verifier < ApplicationRecord
   @@runner_types = nil
 
   def run
-    runner.run(self)
+    result = Verification::Result.new target_name: service.name, verifier_name: name
+
+    begin
+      result.success = runner.run(self)
+    rescue StandardError => e
+      result.success = false
+      result.message = e.message
+    end
+
+    result
   end
 
   def self.available_runners
     runners
   end
 
+  def self.runners
+    @@runner_types ||= load_runner_types
+  end
+
+  def self.load_runner_types
+    runner_classes.map { |runner_class| [runner_name_for(runner_class), "Verification::Runners::#{runner_class}".constantize] }.to_h
+  end
+
+  def self.runner_name_for(runner_class)
+    runner_class.to_s.gsub('Runner', '').underscore
+  end
+
+  def self.runner_classes
+    Dir.glob(File.join(Rails.root, 'app', 'business', 'verification', 'runners', '*'))
+       .collect { |file_path| File.basename(file_path, '.rb') }
+       .map(&:camelize)
+  end
+
   private
+
+  def notify_teams_about(result)
+    service.team
+  end
 
   def presence_of_required_runner_params
     return true unless runner.respond_to? :required_parameters
@@ -39,21 +70,5 @@ class Verifier < ApplicationRecord
 
   def runner
     self.class.runners[runner_name]
-  end
-
-  def self.runners
-    @@runner_types ||= load_runner_types
-  end
-
-  def self.load_runner_types
-    runner_classes.map { |runner_class| [runner_name_for(runner_class), "VerificationRunners::#{runner_class}".constantize] }.to_h
-  end
-
-  def self.runner_name_for(runner_class)
-    runner_class.to_s.gsub('Runner', '').underscore
-  end
-
-  def self.runner_classes
-    Dir.glob(File.join(Rails.root, 'app', 'business', 'verification_runners', '*')).collect { |file_path| File.basename(file_path, '.rb') }.map(&:camelize)
   end
 end
