@@ -6,7 +6,7 @@ require 'slack-notifier'
 module SlackNotifiable
   extend ActiveSupport::Concern
 
-  def execute
+  def push
     return unless can_be_notified?
 
     Slack::Notifier.new(webhook_url, username: Rails.config.notifications.slack_user_name)
