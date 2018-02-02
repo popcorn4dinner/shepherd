@@ -25,9 +25,7 @@ class Service < ApplicationRecord
   has_many :verifiers, inverse_of: :service, autosave: true
 
   def verify!
-    verifiers.map do |verifier|
-      { verifier.name => verifier.run }
-    end
+    verifiers.map(&:run)
   end
 
   def verify_deep!

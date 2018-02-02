@@ -35,19 +35,13 @@ class ServicesController < ApplicationController
   end
 
   def verify
-    results = @service.verify_deep!
+    @verification_results = @service.verify_deep!
 
-    results.each do |target_name, verification_results|
-      target_service = Service.find_by name: target_name
-
-      notification = Notifications::ServiceVerification.new(target_service.team, @service.name, target_name, verification_results)
-
-      notification.push
-
-      SendVerificationResultNotificationJob.perform_later @service.name, target_name, verification_results.to_h
+    @verification_results.each do |target_name, results|
+      send_notification_for @service.name, target_name, results
     end
 
-    render json: results
+    render json: @verification_results
   end
 
   private
@@ -58,5 +52,9 @@ class ServicesController < ApplicationController
 
   def set_service
     @service = Service.friendly.find(params[:id])
+  end
+
+  def send_notification_for(trigger, target, results)
+    SendVerificationResultNotificationJob.perform_later trigger, target, results.map(&:to_h)
   end
 end

@@ -27,14 +27,18 @@ module Notifications
 
     def message
       if @trigger_service_name == @service_name
-        "Verification results for #{@service_name}"
+        "Verification results for *#{@service_name}*"
       else
-        "#{@service_name} has been tested as part of the verifiction of #{@trigger_service_name}"
+        "*#{@service_name}* has been tested as part of the verifiction of *#{@trigger_service_name}*"
       end
     end
 
     def attachments
-      @results.map { |result| attachment_for result }
+      unless @results.empty?
+        @results.map { |result| attachment_for result }
+      else
+        [no_verifiers_warning]
+      end
     end
 
     def attachment_for(result)
@@ -57,6 +61,14 @@ module Notifications
       else
         'Failed'
       end
+    end
+
+    def no_verifiers_warning
+      {
+        title: 'No verifiers found',
+        color: :warning,
+        value: 'This service doesn\'t seem to have any verifiers attached to it.'
+      }
     end
   end
 end
