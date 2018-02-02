@@ -12,6 +12,7 @@ class Service < ApplicationRecord
   validates :description, presence: true
 
   belongs_to :project
+  has_one :team, through: :project
 
   has_and_belongs_to_many :dependencies,
                           class_name: 'Service',

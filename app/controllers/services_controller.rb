@@ -38,7 +38,13 @@ class ServicesController < ApplicationController
     results = @service.verify_deep!
 
     results.each do |target_name, verification_results|
-      SendVerificationResultNotificationJob.perform_later @service.name, target_name, verification_results.to_json
+      target_service = Service.find_by name: target_name
+
+      notification = Notifications::ServiceVerification.new(target_service.team, @service.name, target_name, verification_results)
+
+      notification.push
+
+      SendVerificationResultNotificationJob.perform_later @service.name, target_name, verification_results.to_h
     end
 
     render json: results

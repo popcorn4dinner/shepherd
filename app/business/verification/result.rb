@@ -7,16 +7,23 @@ module Verification
       @target_name = target_name
     end
 
-    def to_json
+    def to_h
       {
-        verifier: verifier_name,
-        success: success,
-        message: message,
-        tested_service: target_name
+        verifier: @verifier_name,
+        success: @success,
+        message: @message,
+        tested_service: @target_name
       }
     end
 
-    def from_json(hashed_data)
+    def to_json
+      json[@verifier_name] = {
+        success: @success,
+        message: @message,
+      }
+    end
+
+    def from_h(hashed_data)
       hashed_data.each do |property, value|
         send("#{property}=", value)
       end

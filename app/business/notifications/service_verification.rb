@@ -27,7 +27,7 @@ module Notifications
 
     def message
       if @trigger_service_name == @service_name
-        "Verification results for #{service_name}"
+        "Verification results for #{@service_name}"
       else
         "#{@service_name} has been tested as part of the verifiction of #{@trigger_service_name}"
       end

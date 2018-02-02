@@ -9,7 +9,7 @@ module SlackNotifiable
   def push
     return unless can_be_notified?
 
-    Slack::Notifier.new(webhook_url, username: Rails.config.notifications.slack_user_name)
+    Slack::Notifier.new(webhook_url, username: Settings.notifications.slack_user_name)
                    .send(slack_notifier_method, slack_message)
   end
 
@@ -26,7 +26,7 @@ module SlackNotifiable
   end
 
   def channel
-    uses_specific_channel? ? channel_name : Rails.config.notifications.default_slack_channel
+    uses_specific_channel? ? channel_name : Settings.notifications.default_slack_channel
   end
 
   def uses_specific_channel?
@@ -34,6 +34,6 @@ module SlackNotifiable
   end
 
   def slack_notifier_method
-    slack_message.is_a? String ? :ping : :post
+    slack_message.is_a?(String) ? :ping : :post
   end
 end
