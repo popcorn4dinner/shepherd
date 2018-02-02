@@ -30,7 +30,8 @@ class Service < ApplicationRecord
   end
 
   def verify_deep!
-    dependencies.map { |d| { d.name => d.verify! } } << { name => verify! }
+    results = dependency_of.map { |d| [d.name, d.verify!] } << [name, verify!]
+    results.to_h
   end
 
   def internal_dependencies

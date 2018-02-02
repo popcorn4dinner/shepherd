@@ -3,8 +3,9 @@
 class SendVerificationResultNotificationJob < ApplicationJob
   queue_as :default
 
-  def perform(service_name, results)
-    target_service = Service.find_by name: result.target_name
+  def perform(service_name, target_name, result_data)
+    results = result_data.map { |data_set| Verification::Result.from_json data_set}
+    target_service = Service.find_by name: target_name
 
     notification = Notifications::ServiceVerification.new(
       trigger_service_name: service_name,

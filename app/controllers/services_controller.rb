@@ -37,8 +37,8 @@ class ServicesController < ApplicationController
   def verify
     results = @service.verify_deep!
 
-    results.each do |service_name, result|
-      SendVerificationResultNotificationJob.perform_later service_name, result
+    results.each do |target_name, verification_results|
+      SendVerificationResultNotificationJob.perform_later @service.name, target_name, verification_results.to_json
     end
 
     render json: results

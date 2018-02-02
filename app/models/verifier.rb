@@ -14,7 +14,7 @@ class Verifier < ApplicationRecord
   @@runner_types = nil
 
   def run
-    result = Verification::Result.new target_name: service.name, verifier_name: name
+    result = Verification::Result.new(service.name, name)
 
     begin
       result.success = runner.run(self)
