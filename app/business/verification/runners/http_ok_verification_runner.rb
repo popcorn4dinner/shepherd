@@ -3,17 +3,22 @@
 module Verification
   module Runners
     class HttpOkVerificationRunner
+      include Singleton
 
       def initialize(rest_client = RestClient)
-        @restClient = rest_client
+        @rest_client = rest_client
       end
 
-      def self.run(verifier)
-        response = @rest_client.get verifier.runner_params.find_by(name: 'url').value
-        response.code == 200
+      def run(verifier)
+        begin
+          response = @rest_client.get verifier.runner_params.find_by(name: 'url').value
+          response.code == 200
+        rescue RestClient::Exception => e
+          raise Verification::VerificationError, e.message
+        end
       end
 
-      def self.required_parameters
+      def self.equired_parameters
         [:url]
       end
     end

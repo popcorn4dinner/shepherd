@@ -3,14 +3,19 @@
 module Verification
   module Runners
     class HealthVerificationRunner
+      include Singleton
 
       def initialize(rest_client = RestClient)
         @rest_client = rest_client
       end
 
-      def self.run(verifier)
-        response = @rest_client.get verifier.service.health_endpoint
-        response.code == 200
+      def run(verifier)
+        begin
+          response = @rest_client.get verifier.service.health_endpoint_url
+          response.code == 200
+        rescue RestClient::Exception => e
+          raise Verification::VerificationError, e.message
+        end
       end
 
       def self.required_parameters

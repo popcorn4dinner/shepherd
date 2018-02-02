@@ -18,7 +18,7 @@ class Verifier < ApplicationRecord
 
     begin
       result.success = runner.run(self)
-    rescue StandardError => e
+    rescue Verification::VerificationError => e
       result.success = false
       result.message = e.message
     end
@@ -69,6 +69,6 @@ class Verifier < ApplicationRecord
   end
 
   def runner
-    self.class.runners[runner_name]
+    self.class.runners[runner_name].instance
   end
 end
