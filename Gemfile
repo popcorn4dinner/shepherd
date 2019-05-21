@@ -34,7 +34,6 @@ gem 'jbuilder', '~> 2.5'
 # gem 'bcrypt', '~> 3.1.7'
 
 gem 'activeadmin', '~> 2.0'
-gem 'activeadmin_addons'
 gem 'config'
 gem 'diplomat'
 gem 'font-awesome-sass'

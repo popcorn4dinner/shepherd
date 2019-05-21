@@ -24,6 +24,8 @@ class Service < ApplicationRecord
   has_and_belongs_to_many :external_resources
   has_many :verifiers, inverse_of: :service, autosave: true
 
+  enum status: {up: 0, warning: 1, down: 2}
+
   def verify!
     verifiers.map(&:run)
   end
