@@ -33,7 +33,7 @@ gem 'jbuilder', '~> 2.5'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
-gem 'activeadmin', '~> 1.0.0.pre4'
+gem 'activeadmin', '~> 2.0'
 gem 'activeadmin_addons'
 gem 'config'
 gem 'diplomat'
@@ -41,11 +41,12 @@ gem 'font-awesome-sass'
 gem 'foundation-rails', '~> 6.4'
 gem 'friendly_id', '~> 5.1.0'
 gem 'gon'
-gem 'inherited_resources', github: 'activeadmin/inherited_resources'
 gem 'jquery-ui-rails', '~> 5.0.4'
 gem 'rest-client'
 gem 'seed_dump'
 gem 'slack-notifier'
+gem 'freska', git: 'https://github.com/freska-fi/freska-sinatra.git', tag: 'v0.7.1', require: 'freska'
+
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
