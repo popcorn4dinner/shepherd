@@ -10,7 +10,7 @@ services:
     command: ./start.sh
     volumes:
       - .:/app
-      - /Users/schnib01/.ssh:/root/.ssh
+      - /Users/bastian/.ssh:/root/.ssh
     ports:
       - "80:4000"
     depends_on:
@@ -36,72 +36,72 @@ services:
 
   service1:
     build:
-      context: ../sinatra_dummy_app
+      context: ../sinatra_dummy_service
     ports:
       - 80
 
   service2:
     build:
-      context: ../sinatra_dummy_app
+      context: ../sinatra_dummy_service
     ports:
       - 80
 
   service3:
     build:
-      context: ../sinatra_dummy_app
+      context: ../sinatra_dummy_service
     ports:
       - 80
 
   service4:
     build:
-      context: ../sinatra_dummy_app
+      context: ../sinatra_dummy_service
     ports:
       - 80
 
   service5:
     build:
-      context: ../sinatra_dummy_app
+      context: ../sinatra_dummy_service
     ports:
       - 80
 
   service6:
     build:
-      context: ../sinatra_dummy_app
+      context: ../sinatra_dummy_service
     ports:
       - 80
 
   service7:
     build:
-      context: ../sinatra_dummy_app
+      context: ../sinatra_dummy_service
     ports:
       - 80
 
   service8:
     build:
-      context: ../sinatra_dummy_app
+      context: ../sinatra_dummy_service
     ports:
       - 80
 
   service9:
     build:
-      context: ../sinatra_dummy_app
+      context: ../sinatra_dummy_service
     ports:
       - 80
 
   service10:
     build:
-      context: ../sinatra_dummy_app
+      context: ../sinatra_dummy_service
     ports:
       - 80
 
   service11:
     build:
-      context: ../sinatra_dummy_app
+      context: ../sinatra_dummy_service
     ports:
       - 80
 
   service12:
     build:
-      context: ../sinatra_dummy_app
+      context: ../sinatra_dummy_service
     ports:
       - 80

@@ -114,7 +114,4 @@ ActiveRecord::Schema.define(version: 20180201071727) do
     t.index ["service_id"], name: "index_verifiers_on_service_id", using: :btree
   end
 
-  add_foreign_key "dependencies", "services"
-  add_foreign_key "projects", "teams"
-  add_foreign_key "services", "projects"
 end
