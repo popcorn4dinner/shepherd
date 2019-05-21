@@ -24,7 +24,7 @@ class ServicesController < ApplicationController
     render action: 'new'
   end
 
-  def update
+  def refresh
     @service = ServiceFactory.update_with_shepherd_file(@service)
 
     if @service.save
@@ -34,27 +34,29 @@ class ServicesController < ApplicationController
     end
   end
 
-  def verify
-    @verification_results = @service.verify_deep!
+  def update_status
+    old_status = @service.status
+    @service.send("#{service_params[:status]}!")
 
-    @verification_results.each do |target_name, results|
-      send_notification_for @service.name, target_name, results
+    if @service.save
+      send_notification(old_status, @service.status)
+      respond_to do |format|
+        format.json { render :show }
+      end
     end
-
-    render json: @verification_results
   end
 
   private
 
   def service_params
-    params.require(:service).permit(:id, :repository_url)
+    params.require(:service).permit(:id, :repository_url, :status)
   end
 
   def set_service
     @service = Service.friendly.find(params[:id])
   end
 
-  def send_notification_for(trigger, target, results)
-    SendVerificationResultNotificationJob.perform_later trigger, target, results.map(&:to_h)
+  def send_notification(old_status, new_status)
+    SendVerificationResultNotificationJob.perform_later @service, old_status, new_status
   end
 end

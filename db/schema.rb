@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180201071727) do
+ActiveRecord::Schema.define(version: 20190521121428) do
 
   create_table "active_admin_comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "namespace"
@@ -81,7 +81,6 @@ ActiveRecord::Schema.define(version: 20180201071727) do
 
   create_table "services", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
-    t.string   "health_endpoint"
     t.integer  "project_id"
     t.datetime "created_at",                                        null: false
     t.datetime "updated_at",                                        null: false
@@ -90,6 +89,7 @@ ActiveRecord::Schema.define(version: 20180201071727) do
     t.string   "repository_url"
     t.text     "description",         limit: 65535
     t.string   "documentation_url"
+    t.integer  "status",                            default: 1
     t.index ["project_id"], name: "index_services_on_project_id", using: :btree
     t.index ["slug"], name: "index_services_on_slug", unique: true, using: :btree
   end

@@ -25,7 +25,6 @@ class ServiceFactory
         .add_team(config[:team])
         .add_user_entry_point(config[:user_entry_point])
         .add_project(config[:project])
-        .add_health_endpoint(config[:health_endpoint])
         .replace_external_resources_with(config[:external_resources])
         .replace_dependencies_with(config[:dependencies])
         .replace_verifiers_with(config[:verifiers])

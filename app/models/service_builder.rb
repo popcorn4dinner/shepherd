@@ -23,12 +23,6 @@ class ServiceBuilder
     self
   end
 
-  def add_health_endpoint(url)
-    service.health_endpoint =  url
-
-    self
-  end
-
   def add_user_entry_point(value)
     service.is_user_entry_point = value
 

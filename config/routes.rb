@@ -3,7 +3,8 @@ Rails.application.routes.draw do
   root to: 'projects#index'
 
   resources :services, only: [:new, :create]
-  post '/services/:id/update', to: 'services#update', as: 'service_update'
+  post '/services/:id/refresh', to: 'services#refresh', as: 'service_update'
+  patch '/services/:id', to: 'service#update_status', as: 'service_status_update'
 
   get '/services/:id/verify', to: 'services#verify', as: 'service_verification'
 
