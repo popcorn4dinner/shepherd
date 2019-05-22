@@ -10,7 +10,7 @@ end
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.1'
 # Use postgresql as the database for Active Record
-gem 'mysql2'
+gem 'pg'
 # Use Puma as the app server
 gem 'puma', '~> 3.0'
 # Use SCSS for stylesheets
@@ -35,7 +35,6 @@ gem 'jbuilder', '~> 2.5'
 
 gem 'activeadmin', '~> 2.0'
 gem 'config'
-gem 'diplomat'
 gem 'font-awesome-sass'
 gem 'foundation-rails', '~> 6.4'
 gem 'friendly_id', '~> 5.1.0'
@@ -44,7 +43,7 @@ gem 'jquery-ui-rails', '~> 5.0.4'
 gem 'seed_dump'
 gem 'slack-notifier'
 gem 'freska', git: 'https://github.com/freska-fi/freska-sinatra.git', tag: 'v0.7.1', require: 'freska'
-gem 'devise'
+gem 'devise', '~> 4.6'
 
 
 group :development, :test do

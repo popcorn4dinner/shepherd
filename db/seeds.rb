@@ -52,3 +52,4 @@ Dependency.create!([
   {type: nil, service_id: 1, dependency_id: 10},
   {type: nil, service_id: 9, dependency_id: 1}
 ])
+AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
