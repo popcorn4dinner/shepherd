@@ -41,10 +41,10 @@ gem 'foundation-rails', '~> 6.4'
 gem 'friendly_id', '~> 5.1.0'
 gem 'gon'
 gem 'jquery-ui-rails', '~> 5.0.4'
-gem 'rest-client'
 gem 'seed_dump'
 gem 'slack-notifier'
 gem 'freska', git: 'https://github.com/freska-fi/freska-sinatra.git', tag: 'v0.7.1', require: 'freska'
+gem 'devise'
 
 
 group :development, :test do

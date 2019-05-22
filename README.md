@@ -22,9 +22,9 @@ docker-compose exec web rails db:seed
 #### Administrate using ActiveAdmin
 
 ### Shepherd project files
-You can import all information about your service from a `.shepherd.yaml` file in your project repository.  
+You can import all information about your service from a `.shepherd.yaml` file in your project repository.
 This allows you to let your dependency documentation evolve together with the features you add.
-If you are using a Continuous integration / Continuous Delivery solution like GitlabCI, Bamboo or GoCD, you can call 
+If you are using a Continuous integration / Continuous Delivery solution like GitlabCI, Bamboo or GoCD, you can call
 the endpoint `POST /service/{service-name}/update` to reimport the `.shepherd.yaml` file automatically from your project
  repository.
 #### Basic Information
@@ -32,24 +32,24 @@ the endpoint `POST /service/{service-name}/update` to reimport the `.shepherd.ya
 ```yaml
 name: awesome-video-compressor
 team: some team
-project: Awesome Streaming 
+project: Awesome Streaming
 description: This microservice compresses video streams and stores them in a s3 bucket
 documentaion_url: http://optional-url-to-your-docs
 ```
 
 #### Health monitoring
-You can use Shepherd to monitor the health of your services in production.  
-In order to do so, you have to add either of the following lines to your `.shepherd.yaml` file.  
-  
+You can use Shepherd to monitor the health of your services in production.
+In order to do so, you have to add either of the following lines to your `.shepherd.yaml` file.
+
 ##### Simple url
 ```yaml
 health_endpoint: http://awesome-video-processor-url/ping
 ```
 
-##### Serivce discovery  
+##### Serivce discovery
 At the moment only `consul` service discovery is supported.
 ```yaml
-health_endpoint: consul:awesome-video-comppressor 
+health_endpoint: consul:awesome-video-comppressor
 
 ```
 #### User entry point
@@ -67,7 +67,7 @@ dependencies:
 ```
 
 #### External Resources
-External resources are things like Databases, Filesystems, Queues, etc. 
+External resources are things like Databases, Filesystems, Queues, etc.
 Basically everything you need to be in your dependency tree, but is not a microservice.
 In your `.shepherd.yaml` file it looks something like this:
 ```yaml
@@ -76,38 +76,6 @@ external_resources:
   - RabbitMQ
   - Legacy Appliction XYZ
 ```
-### Verifiers
-You can use Shepherd to test your (micro)service and all services that depend on it 
-for example when you just released a new version of it.
-Like that you can easily ensure that your changes dont have unforeseen side effects.
-Call `GET /services/{service-name}/verify`. A response might looks like this:
-
-```json
-[
-  {
-    "awesome-service": [
-      {
-      "Simple Check": true
-      }
-   ]
-  }
-]
-
-```
-#### Configuration
-To tell shepherd how to test your service, you need to add a `verifiers` section to your `.shepherd.yaml' file.  
-Right now, two types are supported: `health_verification` and `http_ok_verification`.
-```yaml
-    verifiers:
-      smoke_tests:
-        - name: Healthy
-          runner: health_verification
-      funtional_tests:
-        - name: Simple Http Check
-          runner: http_ok_verification
-          url: http://some-fancy-test-url
-```
-
 ### API
 */admin/projects/{project-slug}.json*
 
@@ -165,6 +133,5 @@ Right now, two types are supported: `health_verification` and `http_ok_verificat
     ]
   }
   ```
-  
-## Installation
 
+## Installation

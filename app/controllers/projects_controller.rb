@@ -23,6 +23,15 @@ class ProjectsController < ApplicationController
     gon.networkData = network.to_hash
   end
 
+  def incidents
+    @services = @project.services.where.not(status: :up)
+
+    respond_to do |format|
+      format.html { render :index, @services }
+      format.json { render @services.to_json }
+    end
+  end
+
   private
 
   def set_project

@@ -26,15 +26,6 @@ class Service < ApplicationRecord
 
   enum status: {up: 0, unknown: 1, warning: 2, down: 3}
 
-  def verify!
-    verifiers.map(&:run)
-  end
-
-  def verify_deep!
-    results = dependency_of.map { |d| [d.name, d.verify!] } << [name, verify!]
-    results.to_h
-  end
-
   def internal_dependencies
     dependencies.select { |d| d.project == project }
   end
@@ -68,25 +59,6 @@ class Service < ApplicationRecord
 
   def external_dependency_of
     dependency_of.reject { |d| d.project == project }
-  end
-
-  def status
-    if health_endpoint.present?
-      case current_status_code
-      when 200..299
-        :up
-      when 300..499
-        :config_error
-      else
-        :down
-      end
-    else
-      :no_status
-    end
-  end
-
-  def health_endpoint_url
-    service_url_resolver.resolve(health_endpoint)
   end
 
   private

@@ -27,3 +27,4 @@ vendor
 
 # IntelliJ
 .idea
+*.DS_Store

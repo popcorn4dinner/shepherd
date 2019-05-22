@@ -7,9 +7,10 @@ module Notifications
 
     delegate :channel_name, :webhook_url, to: :@team
 
-    def initialize(team, trigger_service_name, service_name, results)
+    def initialize(team, service_name, old_status, new_status)
       @team = team
-      @results = results
+      @old_status = old_status
+      @new_status = new_status
       @service_name = service_name
       @trigger_service_name = trigger_service_name
     end

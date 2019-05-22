@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190521121428) do
+ActiveRecord::Schema.define(version: 20190522053845) do
 
   create_table "active_admin_comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "namespace"
@@ -70,15 +70,6 @@ ActiveRecord::Schema.define(version: 20190521121428) do
     t.index ["team_id"], name: "index_projects_on_team_id", using: :btree
   end
 
-  create_table "runner_params", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string   "name"
-    t.string   "value"
-    t.integer  "verifier_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.index ["verifier_id"], name: "index_runner_params_on_verifier_id", using: :btree
-  end
-
   create_table "services", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
     t.integer  "project_id"
@@ -102,16 +93,6 @@ ActiveRecord::Schema.define(version: 20190521121428) do
     t.string   "webhook_url"
     t.string   "channel_name"
     t.index ["slug"], name: "index_teams_on_slug", unique: true, using: :btree
-  end
-
-  create_table "verifiers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string   "name"
-    t.string   "runner_name"
-    t.string   "group"
-    t.integer  "service_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.index ["service_id"], name: "index_verifiers_on_service_id", using: :btree
   end
 
 end
