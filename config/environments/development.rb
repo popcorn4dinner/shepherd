@@ -53,6 +53,6 @@ Rails.application.configure do
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
 
-  config.auth.enabled = false
-  config.auth.key_path = ENV['AUTH_KEY_PATH']
+  config.auth_enabled = false
+  config.auth_key_path = ENV['AUTH_KEY_PATH']
 end

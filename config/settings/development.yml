@@ -12,4 +12,4 @@ service_discovery:
   consul_port: '8500'
 notifications:
   default_slack_channel: '#default'
-  slack_user_name: 'Shepherd'
+  slack_user_name: 'Freska Service Catalogue'

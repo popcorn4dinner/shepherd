@@ -8,7 +8,7 @@ module NetworkBuilders
       end
 
       def build()
-        network = Vis::Network::Base.new(@options)
+        network = Vis::Network::Basic.new(@options)
 
         network.add_node_type :user, get_vis_options_for(:user)
         network.add_node_type :service, get_vis_options_for(:service)

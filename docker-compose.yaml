@@ -37,6 +37,12 @@ services:
       # - service11:service11
       # - service12:service12
 
+  runner:
+    image: eu.gcr.io/freska-production/system-test-runner
+    environment:
+      CATALOGUE_URL: http://localhost:80
+      APP_NAME: test_app
+    command: ["pwd"]
   # service1:
   #   build:
   #     context: ../sinatra_dummy_service

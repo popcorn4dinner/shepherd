@@ -84,6 +84,6 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  config.auth.enabled = true
-  config.auth.key_path = ENV['AUTH_KEY_PATH']
+  config.auth_enabled = true
+  config.auth_key_path = ENV['AUTH_KEY_PATH']
 end
