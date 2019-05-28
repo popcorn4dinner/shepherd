@@ -5,16 +5,13 @@ Rails.application.routes.draw do
 
   resources :services, only: [:new, :create]
 
-  devise_for do
     post '/services/:id/refresh', to: 'services#refresh', as: 'service_update'
-    patch '/services/:id', to: 'service#update_status', as: 'service_status_update'
-
-    get '/services/:id/verify', to: 'services#verify', as: 'service_verification'
+    patch '/services/:id/status', to: 'services#update_status', as: 'service_status_update'
 
     get '/projects/:id/health', to: 'projects#health', as: 'project_health'
     get '/projects/:id', to: 'projects#show', as: 'project'
     get '/projects', to: 'projects#index', as: 'projects'
-  end
+
   ActiveAdmin.routes(self)
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

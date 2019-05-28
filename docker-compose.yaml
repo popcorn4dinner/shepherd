@@ -8,14 +8,15 @@ services:
     ports:
       - 5432:5432
 
-  web:
+  dev:
     build: .
+    image: shepherd:latest
     command: ./start.sh
     volumes:
       - .:/app
       - /Users/bastian/.ssh:/root/.ssh
     ports:
-      - "80:4000"
+      - "4000:4000"
     depends_on:
       - db
     environment:
@@ -40,9 +41,12 @@ services:
   runner:
     image: eu.gcr.io/freska-production/system-test-runner
     environment:
-      CATALOGUE_URL: http://localhost:80
-      APP_NAME: test_app
+      CATALOGUE_URL: "http://dev:4000"
+      APP_NAME: test-app
     command: ["pwd"]
+    depends_on:
+      - dev
+
   # service1:
   #   build:
   #     context: ../sinatra_dummy_service

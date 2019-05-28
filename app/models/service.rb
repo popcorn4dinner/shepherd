@@ -6,7 +6,6 @@ class Service < ApplicationRecord
   friendly_id :name, use: %i[slugged finders]
 
   validates :name, presence: true, uniqueness: true
-  validates :health_endpoint, length: { maximum: 512 }
   validates :repository_url, length: { maximum: 1024 }
   validates :project, presence: true
   validates :description, presence: true
@@ -22,7 +21,6 @@ class Service < ApplicationRecord
                           uniq: true
 
   has_and_belongs_to_many :external_resources
-  has_many :verifiers, inverse_of: :service, autosave: true
 
   enum status: {up: 0, unknown: 1, warning: 2, down: 3}
 

@@ -1,8 +1,7 @@
 class ServiceFileReader
 
-  MANDATORY_FIELDS = [:name, :team, :project, :description, :health_endpoint]
-  OPTIONAL_FIELDS = {external_resources: [], dependencies: [], smoke_tests: [], functional_tests: [], verifiers: [], documentation_url: nil, user_entry_point: false}
-  VERIFIER_TYPES = {smoke_tests: :smoke_test, functional_tests: :functional_test}
+  MANDATORY_FIELDS = [:name, :team, :project, :description]
+  OPTIONAL_FIELDS = {external_resources: [], dependencies: [], documentation_url: nil, user_entry_point: false}
 
   def self.from_git_repository(repo_url)
     raise ServiceConfigurationError, 'Http is not supported. Please use ssh url instead.' if is_incompatible repo_url
@@ -37,35 +36,6 @@ class ServiceFileReader
         content[field] = default
       end
     end
-
-    content = adjust_verifiers_structure  content
-
-    return content
-  end
-
-  def self.adjust_verifiers_structure(content)
-    verifiers = []
-
-    content[:verifiers].each do |group, verifier_rows|
-      verifier_rows.each do |verifier_row|
-        verifier = {}
-
-        verifier[:name] = verifier_row[:name]
-        verifier[:runner] = verifier_row[:runner]
-        verifier[:group] = group
-        verifier[:runner_params] = {}
-
-        verifier_row.each do |key, value|
-          unless(verifier.keys.include? key)
-            verifier[:runner_params][key] = value
-          end
-        end
-
-        verifiers << verifier
-      end
-    end
-
-    content[:verifiers] = verifiers
 
     return content
   end

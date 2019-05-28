@@ -2,7 +2,6 @@ ActiveAdmin.register Service do
 
  permit_params :name,
                :description,
-               :health_endpoint,
                :project_id,
                :is_user_entry_point,
                :repository_url,
@@ -26,14 +25,13 @@ ActiveAdmin.register Service do
       f.input :name
       f.input :project
       f.input :description, as: :text
-      f.input :health_endpoint
       f.input :repository_url
       f.input :is_user_entry_point, as: :boolean, default: false
     end
 
     f.inputs 'dependencies' do
-     f.input :dependency_ids, label: 'Dependencies', as: :tags, collection: Service.all
-     f.input :external_resource_ids, label: 'External Resources', as: :tags, collection: ExternalResource.all
+     f.input :dependency_ids, label: 'Dependencies', collection: Service.all
+     f.input :external_resource_ids, label: 'External Resources', collection: ExternalResource.all
     end
 
     f.actions
@@ -50,7 +48,6 @@ ActiveAdmin.register Service do
             link_to 'click here', documentation_url , target: :_blank
           end
           row :is_user_entry_point
-          row :health_endpoint
           row :repository_url
           row :status do
             status_tag service.status
