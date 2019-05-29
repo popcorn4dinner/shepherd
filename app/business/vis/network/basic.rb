@@ -94,6 +94,7 @@ module Vis
       private
 
       def add_type_for(container, name, options)
+        name = name.to_sym
         unless container.key? name
           container[name] = options
         else
@@ -102,7 +103,7 @@ module Vis
       end
 
       def type_exists_for?(scope, name)
-        get_option_container_for(scope).key? name
+        get_option_container_for(scope).key? name.to_sym
       end
 
       def edge_exists_with?(service, dependency)
@@ -111,7 +112,7 @@ module Vis
 
       def get_options_for(scope, name)
         container = get_option_container_for(scope)
-        return container.key?(name) ? container[name] : {}
+        return container.key?(name.to_sym) ? container[name.to_sym] : {}
       end
 
       def get_option_container_for(scope)

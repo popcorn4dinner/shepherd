@@ -1,5 +1,4 @@
 module NetworkBuilders
-
   class ProjectsNetworkBuilder < BaseNetworkBuilder
 
       def initialize(projects, options={})

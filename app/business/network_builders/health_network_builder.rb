@@ -14,7 +14,7 @@ module NetworkBuilders
           network.add_node_type :up, get_vis_options_for(:service_up)
           network.add_node_type :config_error, get_vis_options_for(:service_warning)
           network.add_node_type :down, get_vis_options_for(:service_down)
-          network.add_node_type :no_status, get_vis_options_for(:service)
+          network.add_node_type :unknown, get_vis_options_for(:service)
           network.add_node_type :service, get_vis_options_for(:service)
 
           network.add_node_type :resource, get_vis_options_for(:resource)
@@ -104,6 +104,15 @@ module NetworkBuilders
                     border: 'white'
                   }
               }
+          when :datasource
+            {
+              shape: 'database',
+              color: {
+                background: 'grey',
+                border: 'white'
+              }
+            }
+
             else
               raise ArgumentError, "Invalid group type", caller
           end
