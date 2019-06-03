@@ -1,33 +1,84 @@
 @import "font-awesome-sprockets";
 @import "font-awesome";
 
-$primary-color: #062F4F !default;
+// [TODO]: to be deleted; default colors, from _settings.scss
+// primary: #1779ba,
+// secondary: #767676,
+// success: #3adb76,
+// warning: #ffae00,
+// alert: #cc4b37,
+
+
+// colors brand
+$primary-color: #1d2b45!default;
+$primary-contrast-color: ligthen($primary-color, 10%) !default;
 $secondary-color: #cdcdcd !default;
+
+// colors states
+$success-color: #3adb76 !default; // taken from _settings.scss
 $warning-color: #ffae00 !default;
-$error-color: #cc4b37 !default;
-$base-background-color: darken($primary-color, 80%);
+$alert-color: #cc4b37 !default;
+
+// colors base
+$black: #000 !default;
+$black-alt: #0000006e !default;
+$white: #fff !default;
+$white-alt: #f3f3f3 !default;
+$white-eggshell: #f5f5f5 !default;
+$base-background-color: darken($primary-color, 5%);
+$border-color: lighten($primary-color, 10%);
+// typography
+$font-xlarge: 2.5em;
+$font-large: 1.5em;
+$font-medium: 1em;
+$font-small: 0.8em;
+$font-xsmall: 0.6em;
+
+// alignment
+$align-center: 'center';
+
+// dimensions
+$max-height: 100vh;
+$max-width: 100vw;
+
+// alignment
+$zero-aligment: 0;
+// $padding-top:
+// $padding-bottom:
+// $margin-top:
+// $margin-bottom:
+
+// spqcing
+$base-spacing: 0.2em;
+
+// border
+$border-radius: 3px;
+
+// test vars
+$debug-border: 1px solid red;
 
 html, body{
-  .debug {
-    border: 1px solid red;
-  }
-
-  background-color: lighten($base-background-color, 10%);
+  background-color: $base-background-color;
   height: 100%;
 
-  h2{
-   font-size: 2.5em;
+  h2 {
+   font-size: $font-large;
    color: lighten($primary-color, 20%);
   }
 
   #network{
     height: 700px;
+    width: 100%;
+    background-color: $primary-color;
+    border: 1px solid $border-color;
+    margin-top: 2em;
   }
+
   #projects-dropdown{
     background-color: lighten($primary-color, 5%);
     border: 1px solid $primary-color;
 
-    .menu{
+    .menu {
 
       a {
         color: $secondary-color;
@@ -35,52 +86,116 @@ html, body{
     }
   }
 
-  .head{
+  .head {
     background-color: $primary-color;
-    border-bottom: 1px solid lighten($primary-color, 5%);
-    padding-top: 0.2em;
-    padding-bottom: 0.2em;
+    border-bottom: 1px solid $border-color;
+    padding-top: $base-spacing;
+    padding-bottom: $base-spacing;
 
     h1 {
-      margin-top: 0.2rem;
-      margin-bottom: 0.2rem;
-      font-size: 1.5em;
+      margin-top: 0.4em;
+      margin-bottom: $base-spacing;
+      font-size: $font-medium;
       a {
         color: $secondary-color;
       }
     }
 
     .button-group{
-      margin-bottom: 0;
+      margin-bottom: $zero-aligment;
+    }
+  }
+}
 
-      .button{
-        background-color: lighten($primary-color, 5%);
-        margin-bottom: 0;
+.incidents-container {
+  background-color: $primary-color;
+  border: 1px solid $border-color;
+  padding: 0 1em;
 
-        a {
-          font-size: 0.9em;
-          color: $secondary-color;
-        }
-      }
+  h3 {
+    text-align: center;
+    color: darken($base-background-color, 5%);
+  }
+}
+// div.incident
+.incident {
+  border-radius: 3px;
+  height: 4em;
+  padding: 0 0.6em;
+  margin-top: 1.6em;
+  background: repeating-linear-gradient(45deg, $primary-color, $primary-color 10px, darken($primary-color, 20%) 10px, darken($primary-color, 20%) 20px);
+
+  &.alert {
+    background: repeating-linear-gradient(45deg, $alert-color, $alert-color 10px, darken($alert-color, 20%) 10px, darken($alert-color, 20%) 20px);
+
+    .incident__content {
+      background-color: $alert-color;
     }
 
-
+    h2 {
+      color: darken($alert-color, 30%)
+    }
   }
 
-  .incident {
-    border-radius: 5px;
-    height: 8em;
-    padding: 1em;
+  &.warning {
     background: repeating-linear-gradient(45deg, $warning-color, $warning-color 10px, darken($warning-color, 20%) 10px, darken($warning-color, 20%) 20px);
 
-    .title {
-      height: 100%;
-      background: #0000006e;
-      border-radius: 3px;
-      padding: 1em;
-      color: lighten($warning-color, 70%);
-      font-weight: bold;
+    .incident__content {
+      background-color: $warning-color;
     }
 
+    h2 {
+      color: darken($warning-color, 30%)
+    }
   }
+
+  &__content {
+    height: 100%;
+    border-radius: $border-radius;
+    background-color: $primary-color;
+
+    &__title {
+      font-weight: bold;
+      font-size: $font-large;
+      text-align: center;
+      color: $black;
+      padding-top: 0.6em;
+    }
+
+    &__details {
+      padding: 0 0.5em;
+      color: $black;
+      text-align: center;
+    }
+  }
+
+  &__content {
+    // border: $debug-border;
+
+    &__text {
+      font-size: $font-large;
+      letter-spacing: 0.2rem;
+      text-align: $align-center;
+    }
+  }
+
+  &__icon {
+    text-align: center;
+  }
+}
+
+// .button from foundation
+.button {
+  background-color: transparent;
+  margin-bottom: $zero-aligment;
+
+  &__link {
+    font-size: $font-small;
+    color: $secondary-color;
+  }
+}
+
+.header__title {
+  font-size: $font-xlarge;
+  color: $border-color;
 }

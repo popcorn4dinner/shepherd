@@ -1,57 +1,45 @@
 
 <% content_for :actions do %>
-    <%= link_to "disable health", project_path(@project), class: 'button' %>
-    <%= link_to "admin", admin_project_path(@project), class: 'button' %>
+  <%= link_to "disable health", project_path(@project), class: "button button__link" %>
+  <%= link_to "admin", admin_project_path(@project), class: "button button__link" %>
 <% end %>
-<div class='row'>
+
+<div class="row">
   <div class="small-12 large-12 columns">
-    <h2> <%= @project.to_s %></h2>
+    <h2 class="header__title"> <%= @project.to_s %></h2>
   </div>
 </div>
-<div class='row small-up-2 medium-up-4 large-up-6 debug'>
-    <div class="column column-block">
-      <div class="incident warning">
-        <div class="title"> Service 1 </div>
-      </div>
-    </div>
-    <div class="column column-block">
-      <div class="incident">
-        <div class="title"> Service 2 </div>
-      </div>
-    </div>
-    <div class="column column-block">
-      <div class="incident warning">
-        <div class="title"> Service 1 </div>
-      </div>
-    </div>
-    <div class="column column-block">
-      <div class="incident">
-        <div class="title"> Service 2 </div>
-      </div>
-    </div>
-    <div class="column column-block">
-      <div class="incident warning">
-        <div class="title"> Service 1 </div>
-      </div>
-    </div>
-    <div class="column column-block">
-      <div class="incident">
-        <div class="title"> Service 2 </div>
-      </div>
-    </div>
-    <div class="column column-block">
-      <div class="incident warning">
-        <div class="title"> Service 1 </div>
-      </div>
-    </div>
-    <div class="column column-block">
-      <div class="incident">
-        <div class="title"> Service 2 </div>
-      </div>
-    </div>
+<div class="row">
+  <div class="small-12 columns">
+    <div class="incidents-container">
+      <section class="row small-up-1 medium-up-3 large-up-4">
+        <article class="column column-block">
+          <div class="incident">
+            <div class="incident__content">
+              <h2 class="title incident__content__title">Service name</h2>
+            </div>
+          </div>
+        </article>
+        <article class="column column-block">
+          <div class="incident warning">
+            <div class="incident__content">
+              <h2 class="title incident__content__title">Service name</h2>
+            </div>
+          </div>
+        </article>
 
+        <article class="column column-block">
+          <div class="incident alert">
+            <div class="incident__content">
+              <h2 class="title incident__content__title">Service name</h2>
+            </div>
+          </div>
+        </article>
+      </section>
+    </div>
+  </div>
 </div>
-<div class='row'>
+<div class="row">
   <div class="small-12 large-12 columns">
     <div id="network"></div>
   </div>
