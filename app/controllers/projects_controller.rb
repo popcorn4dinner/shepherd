@@ -38,7 +38,7 @@ class ProjectsController < ApplicationController
     }
 
     respond_to do |format|
-      format.html { render :index, @alerts }
+      format.html { render :index }
       format.json { render json: response_body.to_json }
     end
   end
