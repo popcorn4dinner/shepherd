@@ -2,7 +2,7 @@
 
 class ProjectsController < ApplicationController
   before_action :set_projects
-  before_action :set_project, only: %i[show health]
+  before_action :set_project, only: %i[show health incidents]
 
   # GET /projects
   # GET /projects.json
@@ -21,14 +21,25 @@ class ProjectsController < ApplicationController
   def health
     network = NetworkBuilders::HealthNetworkBuilder.new(@project).build
     gon.networkData = network.to_hash
+
+    respond_to do |format|
+      format.html { render :health }
+      format.json { render json: network.to_hash }
+    end
   end
 
   def incidents
-    @services = @project.services.where.not(status: :up)
+    @alerts = @project.services.where(status: :up)
+    @warnings = @project.services.each(&:direct_external_dependencies).select { |s| s.down? }
+
+    response_body = {
+      alerts: @alerts,
+      warnings: @warnings
+    }
 
     respond_to do |format|
-      format.html { render :index, @services }
-      format.json { render @services.to_json }
+      format.html { render :index, @alerts }
+      format.json { render json: response_body.to_json }
     end
   end
 

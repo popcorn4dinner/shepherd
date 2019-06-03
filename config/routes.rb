@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     post '/services/:id/refresh', to: 'services#refresh', as: 'service_update'
     patch '/services/:id/status', to: 'services#update_status', as: 'service_status_update'
 
+    get '/projects/:id/incidents', to: 'projects#incidents'
     get '/projects/:id/health', to: 'projects#health', as: 'project_health'
     get '/projects/:id', to: 'projects#show', as: 'project'
     get '/projects', to: 'projects#index', as: 'projects'
