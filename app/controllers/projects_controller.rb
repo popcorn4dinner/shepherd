@@ -21,6 +21,7 @@ class ProjectsController < ApplicationController
   def health
     network = NetworkBuilders::HealthNetworkBuilder.new(@project).build
     gon.networkData = network.to_hash
+    gon.project = @project.slug
 
     respond_to do |format|
       format.html { render :health }
