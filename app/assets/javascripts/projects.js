@@ -5,7 +5,7 @@ $(document).on("turbolinks:load ready", function(){
   const INTERVAL = 10000;
 
   initNetwork(gon.networkData);
-  keepRefreshing(INTERVAL);
+  keepRefreshing(INTERVAL, gon.incidents);
 
 
   function keepRefreshing(interval, incidents = {alerts: [], warnings: []}) {

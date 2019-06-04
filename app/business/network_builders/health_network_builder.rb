@@ -12,7 +12,7 @@ module NetworkBuilders
           network.add_node_type :user, get_vis_options_for(:user)
 
           network.add_node_type :up, get_vis_options_for(:service_up)
-          network.add_node_type :config_error, get_vis_options_for(:service_warning)
+          network.add_node_type :warning, get_vis_options_for(:service_warning)
           network.add_node_type :down, get_vis_options_for(:service_down)
           network.add_node_type :unknown, get_vis_options_for(:service)
           network.add_node_type :service, get_vis_options_for(:service)
@@ -42,9 +42,9 @@ module NetworkBuilders
               network.add_edge user_node, service_node, :arrow
             end
 
-            service.dependency_of.each do |dependency|
+            service.dependencies.each do |dependency|
               dependency_node = process_service network, dependency
-              network.add_edge service_node, dependency_node, :arrow_from
+              network.add_edge dependency_node, service_node, :arrow_from
             end
 
             service.external_resources.each do |resource|
@@ -56,7 +56,13 @@ module NetworkBuilders
         end
 
         def create_service_node(network, service)
-          return network.add_node service.name, service.status, group_name_for(service.project)
+          return network.add_node service.name, status_for(service), group_name_for(service.project)
+        end
+
+        def status_for(service)
+          return :down if service.down?
+
+          service.dependencies.select(&:down?).empty? ? :up : :warning
         end
 
         def get_vis_options_for(group_type)

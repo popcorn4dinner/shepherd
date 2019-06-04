@@ -3,6 +3,7 @@
 class ProjectsController < ApplicationController
   before_action :set_projects
   before_action :set_project, only: %i[show health incidents]
+  before_action :load_incidents, only: %i[health incidents]
 
   # GET /projects
   # GET /projects.json
@@ -22,6 +23,7 @@ class ProjectsController < ApplicationController
     network = NetworkBuilders::HealthNetworkBuilder.new(@project).build
     gon.networkData = network.to_hash
     gon.project = @project.slug
+    gon.incidents = {alerts: @alerts, warnings: @warnings}
 
     respond_to do |format|
       format.html { render :health }
@@ -30,9 +32,6 @@ class ProjectsController < ApplicationController
   end
 
   def incidents
-    @alerts = @project.services.where(status: :down)
-    @warnings = @project.services.each(&:direct_external_dependencies).select { |s| s.down? }
-
     response_body = {
       alerts: @alerts,
       warnings: @warnings
@@ -45,6 +44,18 @@ class ProjectsController < ApplicationController
   end
 
   private
+
+  def load_incidents
+    @alerts = @project.services.where(status: :down)
+    @warnings = []
+    @project.services.each do |service|
+      service.dependencies.each do |dependency|
+        @warnings << service if dependency.down?
+      end
+    end
+
+    @warnings = @warnings.uniq.reject { |service| @alerts.map(&:name).include?(service.name) }
+  end
 
   def set_project
     @project = Project.find_by(slug: params[:id])

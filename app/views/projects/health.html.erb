@@ -12,7 +12,29 @@
   <div class="small-12 columns">
     <div class="incidents-container">
       <section class="row small-up-1 medium-up-3 large-up-4">
-        <h3> Everything is up and running. </h3>
+        <% if @warnings.empty? && @alerts.empty? %>
+          <h3> Everything is up and running. </h3>
+        <% else %>
+          <% @alerts.each do |alert| %>
+            <article class="column column-block">
+              <div class="incident alert">
+                <div class="incident__content">
+                  <h2 class="title incident__content__title"><%= alert.name %></h2>
+                </div>
+              </div>
+            </article>
+          <% end %>
+
+          <% @warnings.each do |warning| %>
+            <article class="column column-block">
+              <div class="incident warning">
+                <div class="incident__content">
+                  <h2 class="title incident__content__title"><%= warning.name %></h2>
+                </div>
+              </div>
+            </article>
+          <% end %>
+        <% end %>
       </section>
     </div>
   </div>

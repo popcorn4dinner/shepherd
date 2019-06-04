@@ -121,7 +121,7 @@ html, body{
 // div.incident
 .incident {
   border-radius: 3px;
-  height: 4em;
+  height: 8em;
   padding: 0 0.6em;
   margin-top: 1.6em;
   background: repeating-linear-gradient(45deg, $primary-color, $primary-color 10px, darken($primary-color, 20%) 10px, darken($primary-color, 20%) 20px);
@@ -160,7 +160,7 @@ html, body{
       font-size: $font-large;
       text-align: center;
       color: $black;
-      padding-top: 0.6em;
+      padding-top: 2em;
     }
 
     &__details {
