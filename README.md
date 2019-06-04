@@ -1,4 +1,4 @@
-# Freska Service Catalogue
+# Shepherd - Service Catalogue
 
 A tool to ease the pain of documenting microservices and their dependencies. As a side effect it provides a dashboard for monitoring the status of your running instances, as well as a rest API for release automation.
 
@@ -14,13 +14,6 @@ docker-compose exec web rails db:seed
 ```
 
 ## Usage
-### User interface
-#### Project overview
-
-#### Project health dashboard
-
-#### Administrate using ActiveAdmin
-
 ### Freska Service Catalogue project files
 You can import all information about your service from a `.shepherd.yaml` file in your project repository.
 This allows you to let your dependency documentation evolve together with the features you add.
