@@ -10,7 +10,9 @@ $(document).on("turbolinks:load ready", function(){
 
   function keepRefreshing(interval, incidents = {alerts: [], warnings: []}) {
     window.setTimeout(() => {
-      keepRefreshing(interval, refreshIncidents(incidents, refreshNetwork));
+      refreshIncidents(incidents, refreshNetwork).then(currentIncidents => {
+        keepRefreshing(interval, currentIncidents);
+      });
     }, interval);
   }
 
@@ -24,16 +26,17 @@ $(document).on("turbolinks:load ready", function(){
   }
 
   function refreshIncidents(oldIncidents, onChange) {
-    console.info('loading incidents');
-    $.get( CATALOGUE_URL + '/projects/' + PROJECT + '/incidents.json', function( currentIncidents ) {
+    console.log('refreshing incidents');
+    return $.get( CATALOGUE_URL + '/projects/' + PROJECT + '/incidents.json', function( currentIncidents ) {
       if(incidentsHaveChanged(oldIncidents, currentIncidents)){
-        const container = $('.incidents-container').find('section').first();
-        if(currentIncidents.lenght > 0){
-          container.html(renderNoAlertsMessage());
-        }else{
+        let container = $('.incidents-container').find('section').first();
+
+        if(currentIncidents.alerts.length > 0 || currentIncidents.warnings.length > 0){
           let alerts = currentIncidents.alerts.map(renderAlert);
           let warnings = currentIncidents.warnings.map(renderWarning);
           container.html(alerts + warnings);
+        }else{
+          container.html(renderNoAlertsMessage());
         }
 
         onChange();
@@ -51,23 +54,17 @@ $(document).on("turbolinks:load ready", function(){
 
   function incidentsHaveChanged(old, current){
     if(old.alerts.length != current.alerts.length || old.warnings.length != current.warnings.length) {
-      console.log("length changed")
-      console.log(`${old.warnings.length} -> ${current.warnings.length}`)
-      console.log(`${old.alerts.length} -> ${current.alerts.length}`)
-
       return true;
     }
     old.alerts.forEach((incident, idx) => {
       let currentIncident = current.alerts[idx];
       if(incident.name != currentIncident.name) {
-        console.log("alerts changed")
         return true;
       }
     });
     old.warnings.forEach((incident, idx) => {
       let currentIncident = current.warnings[idx];
       if(incident.name != currentIncident.name) {
-        console.log("warnings changed")
         return true;
       }
     });
@@ -95,7 +92,7 @@ $(document).on("turbolinks:load ready", function(){
   }
 
   function renderNoAlertsMessage() {
-    return '<h3> Everything seems to be up and running. </h3>';
+    return '<h3> Everything is up and running. </h3>';
   }
 
 });

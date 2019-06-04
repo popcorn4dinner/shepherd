@@ -11,7 +11,7 @@
 
 // colors brand
 $primary-color: #1d2b45!default;
-$primary-contrast-color: ligthen($primary-color, 10%) !default;
+$primary-contrast-color: lighten($primary-color, 10%) !default;
 $secondary-color: #cdcdcd !default;
 
 // colors states
@@ -115,6 +115,7 @@ html, body{
   h3 {
     text-align: center;
     color: darken($base-background-color, 5%);
+    margin: 1em;
   }
 }
 // div.incident
@@ -185,10 +186,22 @@ html, body{
 }
 
 // .button from foundation
+.input-group-button .button {
+  background-color: $primary-color;
+
+  &:focus, &:active, &:hover {
+    background-color: $primary-contrast-color;
+  }
+
+}
 .button {
   background-color: transparent;
   margin-bottom: $zero-aligment;
 
+  &:focus, &:active, &:hover {
+    background-color: transparent;
+    border-bottom: solid 2px $border-color;
+  }
   &__link {
     font-size: $font-small;
     color: $secondary-color;

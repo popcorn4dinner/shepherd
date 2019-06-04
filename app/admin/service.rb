@@ -30,8 +30,8 @@ ActiveAdmin.register Service do
     end
 
     f.inputs 'dependencies' do
-     f.input :dependency_ids, label: 'Dependencies', collection: Service.all
-     f.input :external_resource_ids, label: 'External Resources', collection: ExternalResource.all
+     f.input :dependency_ids, label: 'Dependencies', collection: Service.all, multiple: true
+     f.input :external_resource_ids, label: 'External Resources', collection: ExternalResource.all, multiple: true
     end
 
     f.actions
@@ -62,28 +62,28 @@ ActiveAdmin.register Service do
         attributes_table_for service do
           row 'Internal dependencies' do
             service.internal_dependencies.map do |d|
-              status_tag d.name, d.status
+              status_tag d.name, class: d.status
               text_node ""
             end
           end
 
           row 'External dependencies' do
             service.external_dependencies.map do |d|
-              status_tag d.name, d.status
+              status_tag d.name, class: d.status
               text_node ""
             end
           end
 
           row 'Dependency of' do
             service.dependency_of.map do |d|
-              status_tag d.name, d.status
+              status_tag d.name, class: d.status
               text_node ""
             end
           end
 
           row 'Resources' do
             service.external_resources.map do |d|
-              status_tag d.name, :default
+              status_tag d.name, class: :default
               text_node ""
             end
           end

@@ -42,7 +42,7 @@
           <ul class='menu vertical'>
             <% @projects.each do |project|%>
               <li>
-                <%= link_to project.name, project_path(project) %>
+                <%= link_to project.name, project_health_path(project) %>
               </li>
             <% end %>
           </ul>

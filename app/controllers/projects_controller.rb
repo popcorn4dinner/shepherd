@@ -30,7 +30,7 @@ class ProjectsController < ApplicationController
   end
 
   def incidents
-    @alerts = @project.services.where(status: :up)
+    @alerts = @project.services.where(status: :down)
     @warnings = @project.services.each(&:direct_external_dependencies).select { |s| s.down? }
 
     response_body = {

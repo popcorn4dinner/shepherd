@@ -1,6 +1,5 @@
 
 <% content_for :actions do %>
-  <%= link_to "disable health", project_path(@project), class: "button button__link" %>
   <%= link_to "admin", admin_project_path(@project), class: "button button__link" %>
 <% end %>
 
@@ -13,28 +12,7 @@
   <div class="small-12 columns">
     <div class="incidents-container">
       <section class="row small-up-1 medium-up-3 large-up-4">
-        <article class="column column-block">
-          <div class="incident">
-            <div class="incident__content">
-              <h2 class="title incident__content__title">Service name</h2>
-            </div>
-          </div>
-        </article>
-        <article class="column column-block">
-          <div class="incident warning">
-            <div class="incident__content">
-              <h2 class="title incident__content__title">Service name</h2>
-            </div>
-          </div>
-        </article>
-
-        <article class="column column-block">
-          <div class="incident alert">
-            <div class="incident__content">
-              <h2 class="title incident__content__title">Service name</h2>
-            </div>
-          </div>
-        </article>
+        <h3> Everything is up and running. </h3>
       </section>
     </div>
   </div>

@@ -1,18 +1,17 @@
 # frozen_string_literal: true
 
 module Notifications
-  # Notification with results of service verification
-  class ServiceVerification
+  class ServiceStatusAlert
     include SlackNotifiable
 
     delegate :channel_name, :webhook_url, to: :@team
 
-    def initialize(team, service_name, old_status, new_status)
+    def initialize(team, service_name, old_status, new_status, details)
       @team = team
       @old_status = old_status
       @new_status = new_status
       @service_name = service_name
-      @trigger_service_name = trigger_service_name
+      @details = details
     end
 
     protected
@@ -27,11 +26,7 @@ module Notifications
     private
 
     def message
-      if @trigger_service_name == @service_name
-        "Verification results for *#{@service_name}*"
-      else
-        "*#{@service_name}* has been tested as part of the verifiction of *#{@trigger_service_name}*"
-      end
+      "System tests for #{@service_name}"
     end
 
     def attachments
