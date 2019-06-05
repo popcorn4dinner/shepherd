@@ -85,29 +85,6 @@ class ServiceBuilder
     self
   end
 
-  def add_verifier(name, group, runner, runner_params = {})
-
-    verifier = Verifier.create(
-        name: name,
-        group: group,
-        runner_name: runner,
-        runner_params_attributes: runner_params.to_a.map{ |e| {name: e.first, value: e.last} }
-    )
-
-    service.verifiers << verifier
-    self
-  end
-
-  def replace_verifiers_with(records)
-    service.verifiers.delete_all unless service.new_record?
-
-    records.each do |record|
-      add_verifier record[:name], record[:group], record[:runner], record[:runner_params]
-    end
-
-    self
-  end
-
   def build
     @service
   end

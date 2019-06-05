@@ -13,3 +13,4 @@ notifications:
 git:
   user: <%= ENV['GIT_USER'] %>
   access_token: <%= ENV['GIT_ACCESS_TOKEN'] %>
+  branch: production

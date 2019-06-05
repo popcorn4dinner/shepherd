@@ -62,7 +62,7 @@ module NetworkBuilders
         def status_for(service)
           return :down if service.down?
 
-          service.dependencies.select(&:down?).empty? ? :up : :warning
+          service.dependencies.select(&:down?).empty? ? service.status.to_sym : :warning
         end
 
         def get_vis_options_for(group_type)

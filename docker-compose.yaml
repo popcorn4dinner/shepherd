@@ -14,7 +14,6 @@ services:
     command: ./start.sh
     volumes:
       - .:/app
-      - /Users/bastian/.ssh:/root/.ssh
     ports:
       - "4000:4000"
     depends_on:
@@ -24,6 +23,8 @@ services:
       DB_USER: postgres
       DB_PASSWORD: password
       RAILS_ENV: development
+      GIT_USER: popcorn4dinner
+      GIT_ACCESS_TOKEN: 88f7538d9cb5543e472edb96e881572a42c8f4d5
     # links:
       # - service1:service1
       # - service2:service2

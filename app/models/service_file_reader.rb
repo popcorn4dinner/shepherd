@@ -12,7 +12,7 @@ class ServiceFileReader
 
     folder = File.join(Settings.general.temp_directory, SecureRandom.uuid)
 
-    git_clone repo_url, folder, Settings.general.git_branch
+    git_clone repo_url, folder, Settings.git.branch
 
     content = load_content_from folder, Settings.general.shepherd_file.name
 
@@ -44,19 +44,23 @@ class ServiceFileReader
     return content
   end
 
-  def self.git_clone(url, folder, branch)
-    stdout, stderr, status = Open3.capture3 clone_command_for url, folder, branch
+  def self.git_clone(url, folder, branch = DEFAULT_BRANCH)
+    puts 'executing: ' + clone_command_for(url, folder, branch)
 
-    unless status.cuccess?
+    stdout, stderr, status = Open3.capture3 clone_command_for(url, folder, branch)
+    puts stderr
+
+    unless status.success?
       puts "First clone failed. Cloning from #{DEFAULT_BRANCH} instead."
-      stdout, stderr, status = Open3.capture3 clone_command_for url, folder, DEFAULT_BRANCH
+      stdout, stderr, status = Open3.capture3 clone_command_for(url, folder, DEFAULT_BRANCH)
+      puts stderr
     end
 
     status.success?
   end
 
   def self.clone_command_for(url, folder, branch)
-    "git clone --no-checkout --branch #{branch}--depth 1 #{auth_url_for(url)} #{folder} && cd #{folder} && git checkout HEAD -- #{Settings.general.shepherd_file.name}"
+    "git clone --no-checkout --branch #{branch} --depth 1 #{auth_url_for(url)} #{folder} && cd #{folder} && git checkout HEAD -- #{Settings.general.shepherd_file.name}"
   end
 
   def self.load_content_from(folder, file_name)
@@ -71,7 +75,7 @@ class ServiceFileReader
   private
 
   def self.auth_url_for(url)
-    url.gsub('://', "://#{Settings.git.user}:#{Settings.git.access_token}")
+    url.gsub('://', "://#{Settings.git.user}:#{Settings.git.access_token}@")
   end
 
   def self.is_incompatible(repo_url)

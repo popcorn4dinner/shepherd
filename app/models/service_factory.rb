@@ -27,7 +27,6 @@ class ServiceFactory
         .add_project(config[:project])
         .replace_external_resources_with(config[:external_resources])
         .replace_dependencies_with(config[:dependencies])
-        .replace_verifiers_with(config[:verifiers])
         .build
   end
 
