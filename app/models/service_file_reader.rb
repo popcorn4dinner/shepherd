@@ -1,14 +1,18 @@
 class ServiceFileReader
 
+  require 'open3'
+
+  DEFAULT_BRANCH = 'master'
   MANDATORY_FIELDS = [:name, :team, :project, :description]
   OPTIONAL_FIELDS = {external_resources: [], dependencies: [], documentation_url: nil, user_entry_point: false}
 
   def self.from_git_repository(repo_url)
-    raise ServiceConfigurationError, 'Http is not supported. Please use ssh url instead.' if is_incompatible repo_url
+    raise ServiceConfigurationError, 'SSH is not supported. Please use https url instead.' if is_incompatible repo_url
+
 
     folder = File.join(Settings.general.temp_directory, SecureRandom.uuid)
 
-    git_clone repo_url, folder
+    git_clone repo_url, folder, Settings.general.git_branch
 
     content = load_content_from folder, Settings.general.shepherd_file.name
 
@@ -40,10 +44,19 @@ class ServiceFileReader
     return content
   end
 
-  def self.git_clone(url, folder)
+  def self.git_clone(url, folder, branch)
+    stdout, stderr, status = Open3.capture3 clone_command_for url, folder, branch
 
-    command = "git clone --no-checkout --depth 1 #{url} #{folder} && cd #{folder} && git checkout HEAD -- #{Settings.general.shepherd_file.name}"
-    system command
+    unless status.cuccess?
+      puts "First clone failed. Cloning from #{DEFAULT_BRANCH} instead."
+      stdout, stderr, status = Open3.capture3 clone_command_for url, folder, DEFAULT_BRANCH
+    end
+
+    status.success?
+  end
+
+  def self.clone_command_for(url, folder, branch)
+    "git clone --no-checkout --branch #{branch}--depth 1 #{auth_url_for(url)} #{folder} && cd #{folder} && git checkout HEAD -- #{Settings.general.shepherd_file.name}"
   end
 
   def self.load_content_from(folder, file_name)
@@ -57,8 +70,12 @@ class ServiceFileReader
 
   private
 
+  def self.auth_url_for(url)
+    url.gsub('://', "://#{Settings.git.user}:#{Settings.git.access_token}")
+  end
+
   def self.is_incompatible(repo_url)
-    not repo_url.start_with? 'git@'
+    repo_url.start_with? 'git@'
   end
 
 end

@@ -88,8 +88,8 @@ module NetworkBuilders
             when :service_down
               {
                 color: {
-                    background: '#E14658',
-                    border: '#af3644'
+                  background: '#cc4b37',
+                  border: '#923224'
                   }
               }
             when :user

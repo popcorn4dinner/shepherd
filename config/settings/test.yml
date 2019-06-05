@@ -1,0 +1,15 @@
+general:
+  shepherd_file:
+    name: .shepherd.yaml
+  auto_create:
+    teams: true
+    projects: true
+    external_resources: true
+    services_placeholders: true
+  temp_directory: '/tmp'
+notifications:
+  default_slack_channel: '#default'
+  slack_user_name: 'Freska Service Catalogue'
+git:
+  user: <%= ENV['GIT_USER'] %>
+  access_token: <%= ENV['GIT_ACCESS_TOKEN'] %>

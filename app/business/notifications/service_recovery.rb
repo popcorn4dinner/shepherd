@@ -15,10 +15,9 @@ module Notifications
 
     def slack_message
       {
-        text: "`#{@trigger.name}` has recovered",
+        title: "Service has recovered",
         attachments: [
           {
-            title: "Service has recovered",
             text: "`#{@trigger.name}` has recovered and is operating normally.",
             color: 'good',
             value: "Current status is #{@trigger.status}"
