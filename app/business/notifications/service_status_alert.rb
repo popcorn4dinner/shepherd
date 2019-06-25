@@ -16,7 +16,7 @@ module Notifications
 
     def slack_message
       {
-        text: "*Alert:* `#{@service.name}` *down is*",
+        text: "*Alert:* `#{@service.name}` *is not working correctly*",
         attachments: [
           {
             title: "System tests of #{@service.name} are failing.",
